@@ -1,3 +1,14 @@
+#if NET45PLUS
+
+#if false // not yet released
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+[assembly: TypeForwardedTo(typeof(ImmutableArrayInterop))]
+#endif
+
+#else
+
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -56,3 +67,5 @@ namespace System.Runtime.InteropServices
         }
     }
 }
+
+#endif
