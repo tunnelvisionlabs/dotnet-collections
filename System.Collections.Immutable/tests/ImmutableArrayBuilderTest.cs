@@ -46,7 +46,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void NormalConstructionRefType()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<GenericParameterHelper>(3);
+#else
             var builder = new ImmutableArray<GenericParameterHelper>.Builder(3);
+#endif
             Assert.Equal(0, builder.Count);
             Assert.False(((ICollection<GenericParameterHelper>)builder).IsReadOnly);
             for (int i = 0; i < builder.Count; i++)
@@ -66,7 +70,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeIEnumerable()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>(2);
+#else
             var builder = new ImmutableArray<int>.Builder(2);
+#endif
             builder.AddRange((IEnumerable<int>)new[] { 1 });
             Assert.Equal(1, builder.Count);
 
@@ -105,8 +113,13 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeBuilder()
         {
+#if NET45PLUS
+            var builder1 = ImmutableArray.CreateBuilder<int>(2);
+            var builder2 = ImmutableArray.CreateBuilder<int>(2);
+#else
             var builder1 = new ImmutableArray<int>.Builder(2);
             var builder2 = new ImmutableArray<int>.Builder(2);
+#endif
 
             builder1.AddRange(builder2);
             Assert.Equal(0, builder1.Count);
@@ -123,7 +136,12 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeImmutableArray()
         {
+#if NET45PLUS
+            var builder1 = ImmutableArray.CreateBuilder<int>(2);
+#else
             var builder1 = new ImmutableArray<int>.Builder(2);
+#endif
+
             var array = ImmutableArray.Create(1, 2, 3);
 
             builder1.AddRange(array);
@@ -133,7 +151,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeDerivedArray()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<object>();
+#else
             var builder = new ImmutableArray<object>.Builder();
+#endif
             builder.AddRange(new[] { "a", "b" });
             Assert.Equal(new[] { "a", "b" }, builder);
         }
@@ -141,7 +163,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeDerivedImmutableArray()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<object>();
+#else
             var builder = new ImmutableArray<object>.Builder();
+#endif
             builder.AddRange(new[] { "a", "b" }.ToImmutableArray());
             Assert.Equal(new[] { "a", "b" }, builder);
         }
@@ -149,10 +175,18 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void AddRangeDerivedBuilder()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<string>();
+#else
             var builder = new ImmutableArray<string>.Builder();
+#endif
             builder.AddRange(new[] { "a", "b" });
 
+#if NET45PLUS
+            var builderBase = ImmutableArray.CreateBuilder<object>();
+#else
             var builderBase = new ImmutableArray<object>.Builder();
+#endif
             builderBase.AddRange(builder);
             Assert.Equal(new[] { "a", "b" }, builderBase);
         }
@@ -160,7 +194,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Contains()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             Assert.False(builder.Contains(1));
             builder.Add(1);
             Assert.True(builder.Contains(1));
@@ -192,7 +230,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Insert()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(1, 2, 3);
             builder.Insert(1, 4);
             builder.Insert(4, 5);
@@ -204,7 +246,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Remove()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(1, 2, 3, 4);
             Assert.True(builder.Remove(1));
             Assert.False(builder.Remove(6));
@@ -220,7 +266,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void RemoveAt()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(1, 2, 3, 4);
             builder.RemoveAt(0);
             Assert.Throws<ArgumentOutOfRangeException>(() => builder.RemoveAt(-1));
@@ -237,7 +287,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void ReverseContents()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(1, 2, 3, 4);
             builder.ReverseContents();
             Assert.Equal(new[] { 4, 3, 2, 1 }, builder);
@@ -262,7 +316,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Sort()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(2, 4, 1, 3);
             builder.Sort();
             Assert.Equal(new[] { 1, 2, 3, 4 }, builder);
@@ -273,17 +331,29 @@ namespace System.Collections.Immutable.Test
         {
             int[] resultantArray = new[] { 4 };
 
+#if NET45PLUS
+            var builder1 = ImmutableArray.CreateBuilder<int>();
+#else
             var builder1 = new ImmutableArray<int>.Builder();
+#endif
             builder1.Add(4);
             builder1.Sort();
             Assert.Equal(resultantArray, builder1);
 
+#if NET45PLUS
+            var builder2 = ImmutableArray.CreateBuilder<int>();
+#else
             var builder2 = new ImmutableArray<int>.Builder();
+#endif
             builder2.Add(4);
             builder2.Sort(Comparer<int>.Default);
             Assert.Equal(resultantArray, builder2);
 
+#if NET45PLUS
+            var builder3 = ImmutableArray.CreateBuilder<int>();
+#else
             var builder3 = new ImmutableArray<int>.Builder();
+#endif
             builder3.Add(4);
             builder3.Sort(0, 1, Comparer<int>.Default);
             Assert.Equal(resultantArray, builder3);
@@ -292,7 +362,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void SortRange()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(2, 4, 1, 3);
             Assert.Throws<ArgumentOutOfRangeException>(() => builder.Sort(-1, 2, Comparer<int>.Default));
             Assert.Throws<ArgumentOutOfRangeException>(() => builder.Sort(1, 4, Comparer<int>.Default));
@@ -309,8 +383,13 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void SortComparer()
         {
+#if NET45PLUS
+            var builder1 = ImmutableArray.CreateBuilder<string>();
+            var builder2 = ImmutableArray.CreateBuilder<string>();
+#else
             var builder1 = new ImmutableArray<string>.Builder();
             var builder2 = new ImmutableArray<string>.Builder();
+#endif
             builder1.AddRange("c", "B", "a");
             builder2.AddRange("c", "B", "a");
             builder1.Sort(StringComparer.OrdinalIgnoreCase);
@@ -322,7 +401,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Count()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>(3);
+#else
             var builder = new ImmutableArray<int>.Builder(3);
+#endif
 
             // Initial count is at zero, which is less than capacity.
             Assert.Equal(0, builder.Count);
@@ -349,7 +432,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void CountContract()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>(100);
+#else
             var builder = new ImmutableArray<int>.Builder(100);
+#endif
             builder.AddRange(Enumerable.Range(1, 100));
             builder.Count = 10;
             Assert.Equal(Enumerable.Range(1, 10), builder);
@@ -360,7 +447,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void IndexSetter()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             Assert.Throws<IndexOutOfRangeException>(() => builder[0] = 1);
             Assert.Throws<IndexOutOfRangeException>(() => builder[-1] = 1);
 
@@ -380,7 +471,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void ToImmutable()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(1, 2, 3);
 
             ImmutableArray<int> array = builder.ToImmutable();
@@ -400,7 +495,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Clear()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>(2);
+#else
             var builder = new ImmutableArray<int>.Builder(2);
+#endif
             builder.Add(1);
             builder.Add(1);
             builder.Clear();
@@ -411,7 +510,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void MutationsSucceedAfterToImmutable()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>(1);
+#else
             var builder = new ImmutableArray<int>.Builder(1);
+#endif
             builder.Add(1);
             var immutable = builder.ToImmutable();
             builder[0] = 0;
@@ -422,11 +525,19 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void Enumerator()
         {
+#if NET45PLUS
+            var empty = ImmutableArray.CreateBuilder<int>(0);
+#else
             var empty = new ImmutableArray<int>.Builder(0);
+#endif
             var enumerator = empty.GetEnumerator();
             Assert.False(enumerator.MoveNext());
 
+#if NET45PLUS
+            var manyElements = ImmutableArray.CreateBuilder<int>(3);
+#else
             var manyElements = new ImmutableArray<int>.Builder(3);
+#endif
             manyElements.AddRange(1, 2, 3);
             enumerator = manyElements.GetEnumerator();
 
@@ -443,11 +554,19 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void IEnumerator()
         {
+#if NET45PLUS
+            var empty = ImmutableArray.CreateBuilder<int>(0);
+#else
             var empty = new ImmutableArray<int>.Builder(0);
+#endif
             var enumerator = ((IEnumerable<int>)empty).GetEnumerator();
             Assert.False(enumerator.MoveNext());
 
+#if NET45PLUS
+            var manyElements = ImmutableArray.CreateBuilder<int>(3);
+#else
             var manyElements = new ImmutableArray<int>.Builder(3);
+#endif
             manyElements.AddRange(1, 2, 3);
             enumerator = ((IEnumerable<int>)manyElements).GetEnumerator();
 
@@ -463,7 +582,11 @@ namespace System.Collections.Immutable.Test
 
         protected override IEnumerable<T> GetEnumerableOf<T>(params T[] contents)
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<T>(contents.Length);
+#else
             var builder = new ImmutableArray<T>.Builder(contents.Length);
+#endif
             builder.AddRange(contents);
             return builder;
         }

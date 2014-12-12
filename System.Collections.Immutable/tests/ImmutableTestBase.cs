@@ -137,9 +137,11 @@ namespace System.Collections.Immutable.Test
         protected static void StructuralEqualityHelper<TCollection, TElement>(TCollection objectUnderTest, TElement additionalItem, Func<TCollection, IEnumerable<TElement>, bool> equalsStructurally)
             where TCollection : class, IEnumerable<TElement>
         {
+#if !NET45PLUS
             Requires.NotNull(objectUnderTest, "objectUnderTest");
             Requires.Argument(objectUnderTest.Count() >= 2, "objectUnderTest", "Collection must contain at least two elements.");
             Requires.NotNull(equalsStructurally, "equalsStructurally");
+#endif
 
             var structuralEquatableUnderTest = objectUnderTest as IStructuralEquatable;
             var enumerableUnderTest = (IEnumerable<TElement>)objectUnderTest;
@@ -202,7 +204,9 @@ namespace System.Collections.Immutable.Test
 
             internal NonGenericEnumerableWrapper(IEnumerable enumerable)
             {
+#if !NET45PLUS
                 Requires.NotNull(enumerable, "enumerable");
+#endif
                 this.enumerable = enumerable;
             }
 

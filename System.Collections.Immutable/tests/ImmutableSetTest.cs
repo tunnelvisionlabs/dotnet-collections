@@ -65,6 +65,7 @@ namespace System.Collections.Immutable.Test
             this.SymmetricExceptTestHelper(Empty<int>().Add(1).Add(3).Add(5).Add(7), Enumerable.Range(0, 5).ToArray());
         }
 
+#if !NET45PLUS
         [Fact]
         public void EnumeratorTest()
         {
@@ -80,6 +81,7 @@ namespace System.Collections.Immutable.Test
             double[] data = this.GenerateDummyFillData();
             this.EnumeratorTestHelper(set, comparer, data);
         }
+#endif
 
         [Fact]
         public void IntersectTest()
@@ -222,11 +224,15 @@ namespace System.Collections.Immutable.Test
 
         protected abstract ISet<T> EmptyMutable<T>();
 
+#if !NET45PLUS
         internal abstract IBinaryTree GetRootNode<T>(IImmutableSet<T> set);
+#endif
 
         protected void TryGetValueTestHelper(IImmutableSet<string> set)
         {
+#if !NET45PLUS
             Requires.NotNull(set, "set");
+#endif
 
             string expected = "egg";
             set = set.Add(expected);
@@ -504,7 +510,9 @@ namespace System.Collections.Immutable.Test
             var actualSet = set.Except(valuesToRemove);
             CollectionAssertAreEquivalent(expectedSet.ToList(), actualSet.ToList());
 
+#if !NET45PLUS
             this.VerifyAvlTreeState(actualSet);
+#endif
         }
 
         private void SymmetricExceptTestHelper<T>(IImmutableSet<T> set, params T[] otherCollection)
@@ -518,7 +526,9 @@ namespace System.Collections.Immutable.Test
             var actualSet = set.SymmetricExcept(otherCollection);
             CollectionAssertAreEquivalent(expectedSet.ToList(), actualSet.ToList());
 
+#if !NET45PLUS
             this.VerifyAvlTreeState(actualSet);
+#endif
         }
 
         private void IntersectTestHelper<T>(IImmutableSet<T> set, params T[] values)
@@ -534,7 +544,9 @@ namespace System.Collections.Immutable.Test
             var actual = set.Intersect(values);
             CollectionAssertAreEquivalent(expected.ToList(), actual.ToList());
 
+#if !NET45PLUS
             this.VerifyAvlTreeState(actual);
+#endif
         }
 
         private void UnionTestHelper<T>(IImmutableSet<T> set, params T[] values)
@@ -548,7 +560,9 @@ namespace System.Collections.Immutable.Test
             var actual = set.Union(values);
             CollectionAssertAreEquivalent(expected.ToList(), actual.ToList());
 
+#if !NET45PLUS
             this.VerifyAvlTreeState(actual);
+#endif
         }
 
         private void AddTestHelper<T>(IImmutableSet<T> set, params T[] values)
@@ -594,11 +608,13 @@ namespace System.Collections.Immutable.Test
             }
         }
 
+#if !NET45PLUS
         private void VerifyAvlTreeState<T>(IImmutableSet<T> set)
         {
             var rootNode = this.GetRootNode(set);
             rootNode.VerifyBalanced();
             rootNode.VerifyHeightIsWithinTolerance(set.Count);
         }
+#endif
     }
 }

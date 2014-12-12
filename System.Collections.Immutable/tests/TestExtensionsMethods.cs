@@ -13,14 +13,18 @@ namespace System.Collections.Immutable.Test
 
         internal static IDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IImmutableDictionary<TKey, TValue> dictionary)
         {
+#if !NET45PLUS
             Requires.NotNull(dictionary, "dictionary");
+#endif
 
             return (IDictionary<TKey, TValue>)dictionary;
         }
 
         internal static IDictionary<TKey, TValue> ToBuilder<TKey, TValue>(this IImmutableDictionary<TKey, TValue> dictionary)
         {
+#if !NET45PLUS
             Requires.NotNull(dictionary, "dictionary");
+#endif
 
             var hashDictionary = dictionary as ImmutableDictionary<TKey, TValue>;
             if (hashDictionary != null)
@@ -37,6 +41,7 @@ namespace System.Collections.Immutable.Test
             throw new NotSupportedException();
         }
 
+#if !NET45PLUS
         /// <summary>
         /// Verifies that a binary tree is balanced according to AVL rules.
         /// </summary>
@@ -66,7 +71,9 @@ namespace System.Collections.Immutable.Test
                 Assert.InRange(node.Left.Height, 0, 1);
             }
         }
+#endif
 
+#if !NET45PLUS
         /// <summary>
         /// Verifies that a binary tree is no taller than necessary to store the data if it were optimally balanced.
         /// </summary>
@@ -78,5 +85,6 @@ namespace System.Collections.Immutable.Test
             double heightMustBeLessThan = Math.Log(2, GoldenRatio) * Math.Log(Math.Sqrt(5) * ((count ?? node.Count) + 2), 2) - 2;
             Assert.True(node.Height < heightMustBeLessThan);
         }
+#endif
     }
 }

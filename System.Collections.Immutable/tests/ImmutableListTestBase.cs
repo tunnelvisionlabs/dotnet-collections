@@ -11,7 +11,11 @@ namespace System.Collections.Immutable.Test
 {
     public abstract class ImmutableListTestBase : SimpleElementImmutablesTestBase
     {
+#if NET45PLUS
+        internal abstract ImmutableList<T> GetListQuery<T>(ImmutableList<T> list);
+#else
         internal abstract IImmutableListQueries<T> GetListQuery<T>(ImmutableList<T> list);
+#endif
 
         [Fact]
         public void CopyToEmptyTest()
@@ -373,8 +377,10 @@ namespace System.Collections.Immutable.Test
 
         private void BinarySearchPartialSortedListHelper(ImmutableArray<int> inputData, int sortedIndex, int sortedLength)
         {
+#if !NET45PLUS
             Requires.Range(sortedIndex >= 0, "sortedIndex");
             Requires.Range(sortedLength > 0, "sortedLength");
+#endif
             inputData = inputData.Sort(sortedIndex, sortedLength, Comparer<int>.Default);
             int min = inputData[sortedIndex];
             int max = inputData[sortedIndex + sortedLength - 1];

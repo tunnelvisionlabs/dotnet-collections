@@ -8,6 +8,11 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections.Generic;
+#endif
+
     public class ImmutableSortedSetTest : ImmutableSetTest
     {
         private enum Operation
@@ -333,10 +338,12 @@ namespace System.Collections.Immutable.Test
             return new SortedSet<T>();
         }
 
+#if !NET45PLUS
         internal override IBinaryTree GetRootNode<T>(IImmutableSet<T> set)
         {
             return ((ImmutableSortedSet<T>)set).Root;
         }
+#endif
 
         /// <summary>
         /// Tests various aspects of a sorted set.
@@ -351,7 +358,9 @@ namespace System.Collections.Immutable.Test
 
             this.EmptyTestHelper(emptySet);
             Assert.Same(emptySet, emptySet.ToImmutableSortedSet(comparer));
+#if !NET45PLUS
             Assert.Same(comparer ?? Comparer<T>.Default, ((ISortKeyCollection<T>)emptySet).KeyComparer);
+#endif
 
             var reemptied = emptySet.Add(value).Clear();
             Assert.Same(reemptied, reemptied.ToImmutableSortedSet(comparer)); //, "Getting the empty set from a non-empty instance did not preserve the comparer.");

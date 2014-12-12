@@ -8,6 +8,11 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections.Generic;
+#endif
+
     public class ImmutableArrayTest : SimpleElementImmutablesTestBase
     {
         private static readonly ImmutableArray<int> emptyDefault;

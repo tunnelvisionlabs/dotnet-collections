@@ -324,10 +324,17 @@ namespace System.Collections.Immutable.Test
             Assert.Equal<T>(expected, builder.ToList());
         }
 
+#if NET45PLUS
+        internal override ImmutableList<T> GetListQuery<T>(ImmutableList<T> list)
+        {
+            return list;
+        }
+#else
         internal override IImmutableListQueries<T> GetListQuery<T>(ImmutableList<T> list)
         {
             return list.ToBuilder();
         }
+#endif
 
         protected override List<T> SortTestHelper<T>(ImmutableList<T> list)
         {

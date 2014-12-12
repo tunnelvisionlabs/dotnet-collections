@@ -9,6 +9,11 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections.Generic;
+#endif
+
     public class ImmutableSortedDictionaryTest : ImmutableDictionaryTestBase
     {
         private enum Operation
@@ -404,10 +409,12 @@ namespace System.Collections.Immutable.Test
             return ((ImmutableSortedDictionary<TKey, TValue>)dictionary).ValueComparer;
         }
 
+#if !NET45PLUS
         internal override IBinaryTree GetRootNode<TKey, TValue>(IImmutableDictionary<TKey, TValue> dictionary)
         {
             return ((ImmutableSortedDictionary<TKey, TValue>)dictionary).Root;
         }
+#endif
 
         protected void ContainsValueTestHelper<TKey, TValue>(ImmutableSortedDictionary<TKey, TValue> map, TKey key, TValue value)
         {

@@ -191,7 +191,9 @@ namespace System.Collections.Immutable.Test
 
             Assert.Equal(Enumerable.Range(1, expectedTotalSize), list);
 
+#if !NET45PLUS
             list.Root.VerifyHeightIsWithinTolerance();
+#endif
         }
 
         [Fact]
@@ -220,10 +222,14 @@ namespace System.Collections.Immutable.Test
                 list.InsertRange(startPosition, values);
 
                 Assert.Equal(list, immutableList);
+#if !NET45PLUS
                 immutableList.Root.VerifyBalanced();
+#endif
             }
 
+#if !NET45PLUS
             immutableList.Root.VerifyHeightIsWithinTolerance();
+#endif
         }
 
         [Fact]
@@ -745,14 +751,20 @@ namespace System.Collections.Immutable.Test
             return list.Sort(index, count, comparer).ToList();
         }
 
+#if NET45PLUS
+        internal override ImmutableList<T> GetListQuery<T>(ImmutableList<T> list)
+#else
         internal override IImmutableListQueries<T> GetListQuery<T>(ImmutableList<T> list)
+#endif
         {
             return list;
         }
 
         private static void VerifyBalanced<T>(ImmutableList<T> tree)
         {
+#if !NET45PLUS
             tree.Root.VerifyBalanced();
+#endif
         }
 
         private struct Person

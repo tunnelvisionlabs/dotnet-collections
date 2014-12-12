@@ -170,10 +170,12 @@ namespace System.Collections.Immutable.Test
             return new HashSet<T>();
         }
 
+#if !NET45PLUS
         internal override IBinaryTree GetRootNode<T>(IImmutableSet<T> set)
         {
             return ((ImmutableHashSet<T>)set).Root;
         }
+#endif
 
         /// <summary>
         /// Tests various aspects of an unordered set.
@@ -188,7 +190,9 @@ namespace System.Collections.Immutable.Test
 
             this.EmptyTestHelper(emptySet);
             Assert.Same(emptySet, emptySet.ToImmutableHashSet(comparer));
+#if !NET45PLUS
             Assert.Same(comparer ?? EqualityComparer<T>.Default, ((IHashKeyCollection<T>)emptySet).KeyComparer);
+#endif
 
             if (comparer == null)
             {

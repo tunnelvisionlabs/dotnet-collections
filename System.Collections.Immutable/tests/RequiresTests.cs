@@ -8,6 +8,7 @@ namespace System.Collections.Immutable.Test
 {
     public class RequiresTests : ImmutablesTestBase
     {
+#if !NET45PLUS
         [Fact]
         public void Argument()
         {
@@ -47,5 +48,6 @@ namespace System.Collections.Immutable.Test
             Requires.NotNullAllowStructs(new object(), "parameterName");
             Assert.Throws<ArgumentNullException>(() => Requires.NotNullAllowStructs((object)null, "parameterName"));
         }
+#endif
     }
 }

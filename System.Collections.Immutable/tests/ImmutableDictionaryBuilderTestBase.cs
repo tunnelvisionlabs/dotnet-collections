@@ -7,6 +7,11 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections.Generic;
+#endif
+
     public abstract class ImmutableDictionaryBuilderTestBase : ImmutablesTestBase
     {
         [Fact]

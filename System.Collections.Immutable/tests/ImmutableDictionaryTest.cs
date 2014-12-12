@@ -75,12 +75,14 @@ namespace System.Collections.Immutable.Test
             Assert.Same(map, map.SetItem(key, new CaseInsensitiveString(value2)));
         }
 
+#if !NET45PLUS
         [Fact]
         public override void EmptyTest()
         {
             base.EmptyTest();
             this.EmptyTestHelperHash(Empty<int, bool>(), 5);
         }
+#endif
 
         [Fact]
         public void ContainsValueTest()
@@ -333,10 +335,12 @@ namespace System.Collections.Immutable.Test
             return ((ImmutableDictionary<TKey, TValue>)dictionary).ValueComparer;
         }
 
+#if !NET45PLUS
         internal override IBinaryTree GetRootNode<TKey, TValue>(IImmutableDictionary<TKey, TValue> dictionary)
         {
             return ((ImmutableDictionary<TKey, TValue>)dictionary).Root;
         }
+#endif
 
         protected void ContainsValueTestHelper<TKey, TValue>(ImmutableDictionary<TKey, TValue> map, TKey key, TValue value)
         {
@@ -349,10 +353,12 @@ namespace System.Collections.Immutable.Test
             return ImmutableDictionary<TKey, TValue>.Empty.WithComparers(keyComparer, valueComparer);
         }
 
+#if !NET45PLUS
         private void EmptyTestHelperHash<TKey, TValue>(IImmutableDictionary<TKey, TValue> empty, TKey someKey)
         {
             Assert.Same(EqualityComparer<TKey>.Default, ((IHashKeyCollection<TKey>)empty).KeyComparer);
         }
+#endif
 
         /// <summary>
         /// An ordinal comparer for case-insensitive strings.
