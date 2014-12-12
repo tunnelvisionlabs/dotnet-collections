@@ -20,10 +20,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyProduct("System.Collections.Immutable")]
-[assembly: AssemblyTitle("System.Collections.Immutable")]
+[assembly: AssemblyProduct("Rackspace.Collections.Immutable")]
+[assembly: AssemblyTitle("Rackspace.Collections.Immutable")]
 [assembly: AssemblyTrademark("")]
-[assembly: NeutralResourcesLanguageAttribute("en-US")]
+[assembly: NeutralResourcesLanguage("en-US")]
 
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
