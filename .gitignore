@@ -1,0 +1,8 @@
+# Build output
+bin/
+obj/
+
+# Per-user files created by IDEs
+*.suo
+*.user
+*.sln.ide/
