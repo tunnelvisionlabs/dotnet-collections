@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Rackspace.Collections.Immutable</id>
+    <version>0.0.0</version>
+    <title>Rackspace.Collections.Immutable</title>
+    <authors>Sam Harwell</authors>
+    <owners>Sam Harwell</owners>
+    <licenseUrl>https://raw.github.com/rackerlabs/dotnet-collections/v$version$/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/rackerlabs/dotnet-collections</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Compatibility library for using the Microsoft Immutable Collections library in projects targeting .NET 3.5 and newer.</description>
+    <releaseNotes>https://github.com/rackerlabs/dotnet-collections/releases/v$version$</releaseNotes>
+    <copyright></copyright>
+    <tags>immutable collections</tags>
+    <dependencies>
+      <group targetFramework="3.5">
+        <!-- No extra dependencies -->
+      </group>
+      <group targetFramework="4.0">
+        <!-- No extra dependencies -->
+      </group>
+      <group targetFramework="4.5">
+        <dependency id="System.Collections.Immutable" version="1.1.33-beta" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+
+    <!-- Runtime libraries -->
+    <file src="bin\net35-client\$Configuration$\Rackspace.Collections.Immutable.dll" target="lib\net35-client"/>
+    <file src="bin\net35-client\$Configuration$\Rackspace.Collections.Immutable.pdb" target="lib\net35-client"/>
+    <file src="bin\net35-client\$Configuration$\Rackspace.Collections.Immutable.xml" target="lib\net35-client"/>
+
+    <file src="bin\net40-client\$Configuration$\Rackspace.Collections.Immutable.dll" target="lib\net40-client"/>
+    <file src="bin\net40-client\$Configuration$\Rackspace.Collections.Immutable.pdb" target="lib\net40-client"/>
+    <file src="bin\net40-client\$Configuration$\Rackspace.Collections.Immutable.xml" target="lib\net40-client"/>
+
+    <file src="bin\portable-net40\$Configuration$\Rackspace.Collections.Immutable.dll" target="lib\portable-net4+sl5+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+    <file src="bin\portable-net40\$Configuration$\Rackspace.Collections.Immutable.pdb" target="lib\portable-net4+sl5+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+    <file src="bin\portable-net40\$Configuration$\Rackspace.Collections.Immutable.xml" target="lib\portable-net4+sl5+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+
+    <file src="bin\portable-net45\$Configuration$\Rackspace.Collections.Immutable.dll" target="lib\portable-net45+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+    <file src="bin\portable-net45\$Configuration$\Rackspace.Collections.Immutable.pdb" target="lib\portable-net45+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+    <file src="bin\portable-net45\$Configuration$\Rackspace.Collections.Immutable.xml" target="lib\portable-net45+win+wpa81+wp8+MonoAndroid1+MonoTouch1"/>
+
+    <!-- Source code -->
+    <file src="**\*.cs" target="src" />
+
+  </files>
+</package>

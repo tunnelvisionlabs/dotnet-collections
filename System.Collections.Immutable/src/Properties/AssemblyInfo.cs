@@ -13,9 +13,9 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCopyright("\x00a9 Microsoft Corporation.  All rights reserved.")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
-[assembly: AssemblyFileVersion("999.999.999.0")]
-[assembly: AssemblyInformationalVersion("999.999.999.0")]
-[assembly: AssemblyVersion("999.999.999.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.34.0")]
+[assembly: AssemblyInformationalVersion("1.1.34.0-dev")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
@@ -31,8 +31,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 #endif
 
-#if SIGNED
-[assembly: InternalsVisibleTo("System.Collections.Immutable.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010007d1fa57c4aed9f0a32e84aa0faefd0de9e8fd6aec8f87fb03766c834c99921eb23be79ad9d5dcc1dd9ad236132102900b723cf980957fc4e177108fc607774f29e8320e92ea05ece4e821c0a5efe8f1645c4c0c93c1ab99285d622caa652c1dfad63d745d6f2de5f17e5eaf0fc4963d261c8a12436518206dc093344d5ad293")]
-#else
-[assembly: InternalsVisibleTo("System.Collections.Immutable.Tests")]
-#endif
+[assembly: InternalsVisibleTo("System.Collections.Immutable.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100d1d29989b786c3b10bb09f9a4a2efceb785956344f233c7b4667cdf5aa27121cc24820984ed964c590c1502b06e87eb2d96bd87a9a9baaacfa0e3f3f1839afe7cd4a4085332257c52a8a1cecc450e53d38487e13ce7eeb8862f427e7bdabd82eaa1f8c27de98ab7a31e25f8491461ce556b7245978f8c6d4cdb9c8b9f3899da8")]

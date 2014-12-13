@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\build\keys\UnitTestingKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
       <Visible>False</Visible>
@@ -75,6 +81,9 @@
     <Compile Include="TestExtensionsMethods.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\build\keys\UnitTestingKey.snk">
+      <Link>UnitTestingKey.snk</Link>
+    </None>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.System.Collections.Immutable.Tests.portable-net40.config" />
   </ItemGroup>

@@ -41,6 +41,13 @@
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' == 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.net35.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' != 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.net35.dev.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -136,8 +143,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.net35.dev.snk">
+      <Link>Rackspace.Collections.Immutable.net35.dev.snk</Link>
+    </None>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.net35.snk">
+      <Link>Rackspace.Collections.Immutable.net35.snk</Link>
+    </None>
     <None Include="Interfaces.cd" />
     <None Include="packages.System.Collections.Immutable.net35-client.config" />
+    <None Include="Rackspace.Collections.Immutable.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

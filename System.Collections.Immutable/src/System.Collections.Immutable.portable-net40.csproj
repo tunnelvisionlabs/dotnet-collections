@@ -42,6 +42,13 @@
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' == 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' != 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.dev.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -134,8 +141,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.dev.snk">
+      <Link>Rackspace.Collections.Immutable.dev.snk</Link>
+    </None>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.snk">
+      <Link>Rackspace.Collections.Immutable.snk</Link>
+    </None>
     <None Include="Interfaces.cd" />
     <None Include="packages.System.Collections.Immutable.portable-net40.config" />
+    <None Include="Rackspace.Collections.Immutable.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
