@@ -38,7 +38,7 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The root of the binary tree that stores the collection.  Contents are typically not entirely frozen.
             /// </summary>
-            private ImmutableSortedDictionary<int, HashBucket>.Node root = ImmutableSortedDictionary<int, HashBucket>.Node.EmptyNode;
+            private SortedInt32KeyNode<HashBucket> root = SortedInt32KeyNode<HashBucket>.EmptyNode;
 
             /// <summary>
             /// The equality comparer.
@@ -115,7 +115,7 @@ namespace System.Collections.Immutable
 
                     if (value != this.equalityComparer)
                     {
-                        var result = Union(this, new MutationInput(ImmutableSortedDictionary<int, HashBucket>.Node.EmptyNode, value, 0));
+                        var result = Union(this, new MutationInput(SortedInt32KeyNode<HashBucket>.EmptyNode, value, 0));
 
                         this.immutable = null;
                         this.equalityComparer = value;
@@ -144,7 +144,7 @@ namespace System.Collections.Immutable
             /// <summary>
             /// Gets or sets the root of this data structure.
             /// </summary>
-            private ImmutableSortedDictionary<int, HashBucket>.Node Root
+            private SortedInt32KeyNode<HashBucket> Root
             {
                 get
                 {
@@ -252,7 +252,7 @@ namespace System.Collections.Immutable
             public void Clear()
             {
                 this.count = 0;
-                this.Root = ImmutableSortedDictionary<int, HashBucket>.Node.EmptyNode;
+                this.Root = SortedInt32KeyNode<HashBucket>.EmptyNode;
             }
 
             /// <summary>

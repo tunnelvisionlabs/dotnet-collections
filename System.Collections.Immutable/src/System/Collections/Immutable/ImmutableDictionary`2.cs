@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using Validation;
 using BCL = System.Collections.Generic;
 
@@ -48,7 +47,7 @@ namespace System.Collections.Immutable
         /// <summary>
         /// The root node of the tree that stores this map.
         /// </summary>
-        private readonly ImmutableSortedDictionary<int, HashBucket>.Node root;
+        private readonly SortedInt32KeyNode<HashBucket> root;
 
         /// <summary>
         /// The comparer used when comparing hash buckets.
@@ -61,8 +60,8 @@ namespace System.Collections.Immutable
         /// <param name="root">The root.</param>
         /// <param name="comparers">The comparers.</param>
         /// <param name="count">The number of elements in the map.</param>
-        private ImmutableDictionary(ImmutableSortedDictionary<int, HashBucket>.Node root, Comparers comparers, int count)
-            : this(Requires.NotNull(comparers, "comparers"))
+        private ImmutableDictionary(SortedInt32KeyNode<HashBucket> root, Comparers comparers, int count)
+            : this(Requires.NotNullPassthrough(comparers, "comparers"))
         {
             Requires.NotNull(root, "root");
 
@@ -78,7 +77,7 @@ namespace System.Collections.Immutable
         private ImmutableDictionary(Comparers comparers = null)
         {
             this.comparers = comparers ?? Comparers.Get(EqualityComparer<TKey>.Default, EqualityComparer<TValue>.Default);
-            this.root = ImmutableSortedDictionary<int, HashBucket>.Node.EmptyNode;
+            this.root = SortedInt32KeyNode<HashBucket>.EmptyNode;
         }
 
         /// <summary>
@@ -391,7 +390,7 @@ namespace System.Collections.Immutable
             {
                 int hashCode = this.KeyComparer.GetHashCode(key);
                 HashBucket bucket;
-                if (root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+                if (root.TryGetValue(hashCode, out bucket))
                 {
                     OperationResult result;
                     var newBucket = bucket.Remove(key, this.comparers.KeyOnlyComparer, out result);
@@ -513,7 +512,14 @@ namespace System.Collections.Immutable
         [Pure]
         public bool ContainsValue(TValue value)
         {
-            return this.Values.Contains(value, this.ValueComparer);
+            foreach (KeyValuePair<TKey, TValue> item in this) 
+            {
+                if (this.ValueComparer.Equals(value, item.Value)) 
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -706,7 +712,7 @@ namespace System.Collections.Immutable
         /// <summary>
         /// Gets the root node (for testing purposes).
         /// </summary>
-        internal ImmutableSortedDictionary<int, HashBucket>.Node Root
+        internal SortedInt32KeyNode<HashBucket> Root
         {
             get { return this.root; }
         }
@@ -914,7 +920,7 @@ namespace System.Collections.Immutable
         {
             int hashCode = origin.KeyComparer.GetHashCode(key);
             HashBucket bucket;
-            if (origin.Root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+            if (origin.Root.TryGetValue(hashCode, out bucket))
             {
                 TValue value;
                 return bucket.TryGetValue(key, origin.KeyOnlyComparer, out value);
@@ -930,7 +936,7 @@ namespace System.Collections.Immutable
         {
             int hashCode = origin.KeyComparer.GetHashCode(keyValuePair.Key);
             HashBucket bucket;
-            if (origin.Root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+            if (origin.Root.TryGetValue(hashCode, out bucket))
             {
                 TValue value;
                 return bucket.TryGetValue(keyValuePair.Key, origin.KeyOnlyComparer, out value)
@@ -947,7 +953,7 @@ namespace System.Collections.Immutable
         {
             int hashCode = origin.KeyComparer.GetHashCode(key);
             HashBucket bucket;
-            if (origin.Root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+            if (origin.Root.TryGetValue(hashCode, out bucket))
             {
                 return bucket.TryGetValue(key, origin.KeyOnlyComparer, out value);
             }
@@ -963,7 +969,7 @@ namespace System.Collections.Immutable
         {
             int hashCode = origin.KeyComparer.GetHashCode(equalKey);
             HashBucket bucket;
-            if (origin.Root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+            if (origin.Root.TryGetValue(hashCode, out bucket))
             {
                 return bucket.TryGetKey(equalKey, origin.KeyOnlyComparer, out actualKey);
             }
@@ -981,7 +987,7 @@ namespace System.Collections.Immutable
 
             OperationResult result;
             int hashCode = origin.KeyComparer.GetHashCode(key);
-            HashBucket bucket = origin.Root.GetValueOrDefault(hashCode, Comparer<int>.Default);
+            HashBucket bucket = origin.Root.GetValueOrDefault(hashCode);
             var newBucket = bucket.Add(key, value, origin.KeyOnlyComparer, origin.ValueComparer, behavior, out result);
             if (result == OperationResult.NoChangeRequired)
             {
@@ -1004,7 +1010,7 @@ namespace System.Collections.Immutable
             foreach (var pair in items)
             {
                 int hashCode = origin.KeyComparer.GetHashCode(pair.Key);
-                HashBucket bucket = newRoot.GetValueOrDefault(hashCode, Comparer<int>.Default);
+                HashBucket bucket = newRoot.GetValueOrDefault(hashCode);
                 OperationResult result;
                 var newBucket = bucket.Add(pair.Key, pair.Value, origin.KeyOnlyComparer, origin.ValueComparer, collisionBehavior, out result);
                 newRoot = UpdateRoot(newRoot, hashCode, newBucket, origin.HashBucketComparer);
@@ -1024,7 +1030,7 @@ namespace System.Collections.Immutable
         {
             int hashCode = origin.KeyComparer.GetHashCode(key);
             HashBucket bucket;
-            if (origin.Root.TryGetValue(hashCode, Comparer<int>.Default, out bucket))
+            if (origin.Root.TryGetValue(hashCode, out bucket))
             {
                 OperationResult result;
                 var newRoot = UpdateRoot(origin.Root, hashCode, bucket.Remove(key, origin.KeyOnlyComparer, out result), origin.HashBucketComparer);
@@ -1037,17 +1043,17 @@ namespace System.Collections.Immutable
         /// <summary>
         /// Performs the set operation on a given data structure.
         /// </summary>
-        private static ImmutableSortedDictionary<int, HashBucket>.Node UpdateRoot(ImmutableSortedDictionary<int, HashBucket>.Node root, int hashCode, HashBucket newBucket, IEqualityComparer<HashBucket> hashBucketComparer)
+        private static SortedInt32KeyNode<HashBucket> UpdateRoot(SortedInt32KeyNode<HashBucket> root, int hashCode, HashBucket newBucket, IEqualityComparer<HashBucket> hashBucketComparer)
         {
             bool mutated;
             if (newBucket.IsEmpty)
             {
-                return root.Remove(hashCode, Comparer<int>.Default, out mutated);
+                return root.Remove(hashCode, out mutated);
             }
             else
             {
                 bool replacedExistingValue;
-                return root.SetItem(hashCode, newBucket, Comparer<int>.Default, hashBucketComparer, out replacedExistingValue, out mutated);
+                return root.SetItem(hashCode, newBucket, hashBucketComparer, out replacedExistingValue, out mutated);
             }
         }
 
@@ -1062,7 +1068,7 @@ namespace System.Collections.Immutable
         /// <returns>
         /// The immutable collection.
         /// </returns>
-        private static ImmutableDictionary<TKey, TValue> Wrap(ImmutableSortedDictionary<int, HashBucket>.Node root, Comparers comparers, int count)
+        private static ImmutableDictionary<TKey, TValue> Wrap(SortedInt32KeyNode<HashBucket> root, Comparers comparers, int count)
         {
             Requires.NotNull(root, "root");
             Requires.NotNull(comparers, "comparers");
@@ -1076,7 +1082,7 @@ namespace System.Collections.Immutable
         /// <param name="root">The root of the data structure.</param>
         /// <param name="adjustedCountIfDifferentRoot">The adjusted count if the root has changed.</param>
         /// <returns>The immutable collection.</returns>
-        private ImmutableDictionary<TKey, TValue> Wrap(ImmutableSortedDictionary<int, HashBucket>.Node root, int adjustedCountIfDifferentRoot)
+        private ImmutableDictionary<TKey, TValue> Wrap(SortedInt32KeyNode<HashBucket> root, int adjustedCountIfDifferentRoot)
         {
             if (root == null)
             {

@@ -327,6 +327,15 @@ namespace System.Collections.Immutable.Test
         }
 
         [Fact]
+        public void SortNullComparer()
+        {
+            var builder = new ImmutableArray<int>.Builder();
+            builder.AddRange(2, 4, 1, 3);
+            builder.Sort(null);
+            Assert.Equal(new[] { 1, 2, 3, 4 }, builder);
+        }
+
+        [Fact]
         public void SortOneElementArray()
         {
             int[] resultantArray = new[] { 4 };
@@ -375,7 +384,6 @@ namespace System.Collections.Immutable.Test
             builder.Sort(builder.Count, 0, Comparer<int>.Default);
             Assert.Equal(new int[] { 2, 4, 1, 3 }, builder);
 
-            Assert.Throws<ArgumentNullException>(() => builder.Sort(1, 2, null));
             builder.Sort(1, 2, Comparer<int>.Default);
             Assert.Equal(new[] { 2, 1, 4, 3 }, builder);
         }

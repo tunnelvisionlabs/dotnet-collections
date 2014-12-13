@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Linq;
 using Validation;
 
@@ -917,7 +918,7 @@ namespace System.Collections.Immutable
                         {
                             if (!this.valueComparer.Equals(value, item.Value))
                             {
-                                throw new ArgumentException(Strings.DuplicateKey);
+                                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.DuplicateKey, item.Key));
                             }
                         }
                         else
@@ -959,7 +960,8 @@ namespace System.Collections.Immutable
             /// <remarks>
             /// We utilize this resource pool to make "allocation free" enumeration achievable.
             /// </remarks>
-            private static readonly SecureObjectPool<Stack<RefAsValueType<IBinaryTree<KeyValuePair<TKey, TValue>>>>, Enumerator> enumeratingStacks = new SecureObjectPool<Stack<RefAsValueType<IBinaryTree<KeyValuePair<TKey, TValue>>>>, Enumerator>();
+            private static readonly SecureObjectPool<Stack<RefAsValueType<Node>>, Enumerator> enumeratingStacks =
+                new SecureObjectPool<Stack<RefAsValueType<Node>>, Enumerator>();
 
             /// <summary>
             /// The builder being enumerated, if applicable.
@@ -975,17 +977,17 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The set being enumerated.
             /// </summary>
-            private IBinaryTree<KeyValuePair<TKey, TValue>> root;
+            private Node root;
 
             /// <summary>
             /// The stack to use for enumerating the binary tree.
             /// </summary>
-            private SecurePooledObject<Stack<RefAsValueType<IBinaryTree<KeyValuePair<TKey, TValue>>>>> stack;
+            private SecurePooledObject<Stack<RefAsValueType<Node>>> stack;
 
             /// <summary>
             /// The node currently selected.
             /// </summary>
-            private IBinaryTree<KeyValuePair<TKey, TValue>> current;
+            private Node current;
 
             /// <summary>
             /// The version of the builder (when applicable) that is being enumerated.
@@ -997,7 +999,7 @@ namespace System.Collections.Immutable
             /// </summary>
             /// <param name="root">The root of the set to be enumerated.</param>
             /// <param name="builder">The builder, if applicable.</param>
-            internal Enumerator(IBinaryTree<KeyValuePair<TKey, TValue>> root, Builder builder = null)
+            internal Enumerator(Node root, Builder builder = null)
             {
                 Requires.NotNull(root, "root");
 
@@ -1011,11 +1013,11 @@ namespace System.Collections.Immutable
                 {
                     if (!enumeratingStacks.TryTake(this, out this.stack))
                     {
-                        this.stack = enumeratingStacks.PrepNew(this, new Stack<RefAsValueType<IBinaryTree<KeyValuePair<TKey, TValue>>>>(root.Height));
+                        this.stack = enumeratingStacks.PrepNew(this, new Stack<RefAsValueType<Node>>(root.Height));
                     }
-                }
 
-                this.Reset();
+                    this.PushLeft(this.root);
+                }
             }
 
             /// <summary>
@@ -1056,10 +1058,10 @@ namespace System.Collections.Immutable
             {
                 this.root = null;
                 this.current = null;
-                if (this.stack != null && this.stack.Owner == this.poolUserId)
+                Stack<RefAsValueType<Node>> stack;
+                if (this.stack != null && this.stack.TryUse(ref this, out stack))
                 {
-                    var stack = this.stack.Use(this);
-                    stack.Clear();
+                    stack.ClearFastWhenEmpty();
                     enumeratingStacks.TryAdd(this, this.stack);
                 }
 
@@ -1077,10 +1079,10 @@ namespace System.Collections.Immutable
 
                 if (this.stack != null)
                 {
-                    var stack = this.stack.Use(this);
+                    var stack = this.stack.Use(ref this);
                     if (stack.Count > 0)
                     {
-                        IBinaryTree<KeyValuePair<TKey, TValue>> n = stack.Pop().Value;
+                        Node n = stack.Pop().Value;
                         this.current = n;
                         this.PushLeft(n.Right);
                         return true;
@@ -1102,8 +1104,8 @@ namespace System.Collections.Immutable
                 this.current = null;
                 if (this.stack != null)
                 {
-                    var stack = this.stack.Use(this);
-                    stack.Clear();
+                    var stack = this.stack.Use(ref this);
+                    stack.ClearFastWhenEmpty();
                     this.PushLeft(this.root);
                 }
             }
@@ -1113,22 +1115,15 @@ namespace System.Collections.Immutable
             /// </summary>
             internal void ThrowIfDisposed()
             {
-                Contract.Ensures(this.root != null);
-                Contract.EnsuresOnThrow<ObjectDisposedException>(this.root == null);
-
-                if (this.root == null)
-                {
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                }
-
                 // Since this is a struct, copies might not have been marked as disposed.
                 // But the stack we share across those copies would know.
                 // This trick only works when we have a non-null stack.
                 // For enumerators of empty collections, there isn't any natural
                 // way to know when a copy of the struct has been disposed of.
-                if (this.stack != null)
+
+                if (this.root == null || (this.stack != null && !this.stack.IsOwned(ref this)))
                 {
-                    this.stack.ThrowDisposedIfNotOwned(this);
+                    Validation.Requires.FailObjectDisposed(this);
                 }
             }
 
@@ -1148,13 +1143,13 @@ namespace System.Collections.Immutable
             /// Pushes this node and all its Left descendents onto the stack.
             /// </summary>
             /// <param name="node">The starting node to push onto the stack.</param>
-            private void PushLeft(IBinaryTree<KeyValuePair<TKey, TValue>> node)
+            private void PushLeft(Node node)
             {
                 Requires.NotNull(node, "node");
-                var stack = this.stack.Use(this);
+                var stack = this.stack.Use(ref this);
                 while (!node.IsEmpty)
                 {
-                    stack.Push(new RefAsValueType<IBinaryTree<KeyValuePair<TKey, TValue>>>(node));
+                    stack.Push(new RefAsValueType<Node>(node));
                     node = node.Left;
                 }
             }
@@ -1197,7 +1192,7 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The depth of the tree beneath this node.
             /// </summary>
-            private int height;
+            private byte height; // AVL tree max height <= ~1.44 * log2(maxNodes + 2)
 
             /// <summary>
             /// The left tree.
@@ -1243,7 +1238,7 @@ namespace System.Collections.Immutable
                 this.value = value;
                 this.left = left;
                 this.right = right;
-                this.height = 1 + Math.Max(left.height, right.height);
+                this.height = checked((byte)(1 + Math.Max(left.height, right.height)));
                 this.frozen = frozen;
             }
 
@@ -1281,10 +1276,12 @@ namespace System.Collections.Immutable
             /// <summary>
             /// Gets the height of the tree beneath this node.
             /// </summary>
-            int IBinaryTree.Height
-            {
-                get { return this.height; }
-            }
+            public int Height { get { return this.height; } }
+
+            /// <summary>
+            /// Gets the left branch of this node.
+            /// </summary>
+            public Node Left { get { return this.left; } }
 
             /// <summary>
             /// Gets the left branch of this node.
@@ -1297,6 +1294,11 @@ namespace System.Collections.Immutable
             /// <summary>
             /// Gets the right branch of this node.
             /// </summary>
+            public Node Right { get { return this.right; } }
+
+            /// <summary>
+            /// Gets the right branch of this node.
+            /// </summary>
             IBinaryTree IBinaryTree.Right
             {
                 get { return this.right; }
@@ -1305,9 +1307,9 @@ namespace System.Collections.Immutable
             /// <summary>
             /// Gets the value represented by the current node.
             /// </summary>
-            KeyValuePair<TKey, TValue> IBinaryTree<KeyValuePair<TKey, TValue>>.Value
-            {
-                get { return new KeyValuePair<TKey, TValue>(this.key, this.value); }
+            public KeyValuePair<TKey, TValue> Value 
+            { 
+                get { return new KeyValuePair<TKey, TValue>(this.key, this.value); } 
             }
 
             /// <summary>
@@ -1593,7 +1595,14 @@ namespace System.Collections.Immutable
             internal bool ContainsValue(TValue value, IEqualityComparer<TValue> valueComparer)
             {
                 Requires.NotNull(valueComparer, "valueComparer");
-                return this.Values.Contains(value, valueComparer);
+                foreach (KeyValuePair<TKey, TValue> item in this)
+                {
+                    if (valueComparer.Equals(value, item.Value))
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             /// <summary>
@@ -1608,7 +1617,7 @@ namespace System.Collections.Immutable
             [Pure]
             internal bool Contains(KeyValuePair<TKey, TValue> pair, IComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer)
             {
-                Requires.NotNullAllowStructs(pair.Key != null, "key");
+                Requires.NotNullAllowStructs(pair.Key, "key");
                 Requires.NotNull(keyComparer, "keyComparer");
                 Requires.NotNull(valueComparer, "valueComparer");
 
@@ -1874,7 +1883,7 @@ namespace System.Collections.Immutable
                         }
                         else
                         {
-                            throw new ArgumentException(Strings.DuplicateKey);
+                            throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.DuplicateKey, key));
                         }
                     }
 
@@ -1982,7 +1991,7 @@ namespace System.Collections.Immutable
                         this.right = right;
                     }
 
-                    this.height = 1 + Math.Max(this.left.height, this.right.height);
+                    this.height = checked((byte)(1 + Math.Max(this.left.height, this.right.height)));
                     return this;
                 }
             }
@@ -1997,7 +2006,7 @@ namespace System.Collections.Immutable
             {
                 // Arg validation is too expensive for recursive methods.
                 // Callers are expected to have validated parameters.
-                if (this.left == null /* PERF: this.IsEmpty */)
+                if (this.IsEmpty)
                 {
                     return this;
                 }
