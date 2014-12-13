@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>System.Collections.Immutable.Tests</AssemblyName>
+    <OutputPath Condition="'$(OutputPath)'==''">bin\net40-client\$(Configuration)\</OutputPath>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Collections.Immutable.Test</RootNamespace>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\11.0\UITestExtensionPackages</ReferencePath>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <BaseIntermediateOutputPath>obj\net40-client\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BadHasher.cs" />
+    <Compile Include="EverythingEqual.cs" />
+    <Compile Include="ImmutableArrayBuilderTest.cs" />
+    <Compile Include="ImmutableArrayExtensionsTest.cs" />
+    <Compile Include="ImmutableArrayInteropTest.cs" />
+    <Compile Include="ImmutableArrayTest.cs" />
+    <Compile Include="ImmutableArrayTestBase.cs" />
+    <Compile Include="ImmutableDictionaryBuilderTestBase.cs" />
+    <Compile Include="GenericParameterHelper.cs" />
+    <Compile Include="ImmutableDictionaryBuilderTest.cs" />
+    <Compile Include="ImmutableHashSetBuilderTest.cs" />
+    <Compile Include="ImmutableInterlockedTests.cs" />
+    <Compile Include="ImmutableListTestBase.cs" />
+    <Compile Include="ImmutableListBuilderTest.cs" />
+    <Compile Include="ImmutableDictionaryTest.cs" />
+    <Compile Include="ImmutableHashSetTest.cs" />
+    <Compile Include="ImmutableListTest.cs" />
+    <Compile Include="ImmutableDictionaryTestBase.cs" />
+    <Compile Include="ImmutableQueueTest.cs" />
+    <Compile Include="ImmutableSetTest.cs" />
+    <Compile Include="ImmutableSortedDictionaryBuilderTest.cs" />
+    <Compile Include="ImmutableSortedDictionaryTest.cs" />
+    <Compile Include="ImmutableSortedSetBuilderTest.cs" />
+    <Compile Include="ImmutableSortedSetTest.cs" />
+    <Compile Include="ImmutableStackTest.cs" />
+    <Compile Include="ImmutableTestBase.cs" />
+    <Compile Include="IndexOfTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequiresTests.cs" />
+    <Compile Include="SimpleElementImmutablesTestBase.cs" />
+    <Compile Include="TestExtensionsMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.System.Collections.Immutable.Tests.net40-client.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\System.Collections.Immutable.net40-client.csproj">
+      <Project>{d550dc59-8708-47fc-87c4-013794221fbc}</Project>
+      <Name>Rackspace.Collections.Immutable</Name>
+      <Aliases>global,rax</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
