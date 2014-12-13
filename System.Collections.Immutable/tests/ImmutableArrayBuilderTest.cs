@@ -329,7 +329,11 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void SortNullComparer()
         {
+#if NET45PLUS
+            var builder = ImmutableArray.CreateBuilder<int>();
+#else
             var builder = new ImmutableArray<int>.Builder();
+#endif
             builder.AddRange(2, 4, 1, 3);
             builder.Sort(null);
             Assert.Equal(new[] { 1, 2, 3, 4 }, builder);

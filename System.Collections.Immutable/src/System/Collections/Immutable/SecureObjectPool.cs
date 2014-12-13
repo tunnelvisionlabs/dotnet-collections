@@ -131,7 +131,9 @@ namespace System.Collections.Immutable
             }
         }
 
+#if NET45PLUS
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         internal bool IsOwned<TCaller>(ref TCaller caller)
             where TCaller : struct, ISecurePooledObjectUser
         {
