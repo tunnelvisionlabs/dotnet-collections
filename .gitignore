@@ -1,7 +1,8 @@
-# Build output
+# Build and test output
 packages/
 bin/
 obj/
+TestResults/
 
 # Per-user files created by IDEs
 *.suo
