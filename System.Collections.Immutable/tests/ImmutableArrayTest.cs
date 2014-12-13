@@ -10,7 +10,11 @@ namespace System.Collections.Immutable.Test
 {
 #if !NET45PLUS
     extern alias rax;
+    using rax::System.Collections;
     using rax::System.Collections.Generic;
+#if !NET40PLUS
+    using rax::System.Diagnostics.Contracts;
+#endif
 #endif
 
     public class ImmutableArrayTest : SimpleElementImmutablesTestBase
@@ -1043,7 +1047,7 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void StructuralEquatableEquals()
         {
-            IStructuralEquatable array = new int[3] { 1, 2, 3 };
+            IStructuralEquatable array = new int[3] { 1, 2, 3 }.AsStructuralEquatable();
             IStructuralEquatable immArray = ImmutableArray.Create(1, 2, 3);
 
             var otherArray = new object[] { 1, 2, 3 };
@@ -1064,7 +1068,7 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void StructuralEquatableEqualsArrayInterop()
         {
-            IStructuralEquatable array = new int[3] { 1, 2, 3 };
+            IStructuralEquatable array = new int[3] { 1, 2, 3 }.AsStructuralEquatable();
             IStructuralEquatable immArray = ImmutableArray.Create(1, 2, 3);
             var unequalArray = new int[] { 1, 2, 4 };
 
@@ -1082,9 +1086,9 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void StructuralEquatableGetHashCode()
         {
-            IStructuralEquatable emptyArray = new int[0];
+            IStructuralEquatable emptyArray = new int[0].AsStructuralEquatable();
             IStructuralEquatable emptyImmArray = empty;
-            IStructuralEquatable array = new int[3] { 1, 2, 3 };
+            IStructuralEquatable array = new int[3] { 1, 2, 3 }.AsStructuralEquatable();
             IStructuralEquatable immArray = ImmutableArray.Create(1, 2, 3);
 
             Assert.Equal(emptyArray.GetHashCode(EqualityComparer<int>.Default), emptyImmArray.GetHashCode(EqualityComparer<int>.Default));
@@ -1110,13 +1114,13 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void StructuralComparable()
         {
-            IStructuralComparable array = new int[3] { 1, 2, 3 };
-            IStructuralComparable equalArray = new int[3] { 1, 2, 3 };
-            IStructuralComparable immArray = ImmutableArray.Create((int[])array);
-            IStructuralComparable equalImmArray = ImmutableArray.Create((int[])equalArray);
+            IStructuralComparable array = new int[3] { 1, 2, 3 }.AsStructuralComparable();
+            IStructuralComparable equalArray = new int[3] { 1, 2, 3 }.AsStructuralComparable();
+            IStructuralComparable immArray = ImmutableArray.Create(array.CastAsArray<int>());
+            IStructuralComparable equalImmArray = ImmutableArray.Create(equalArray.CastAsArray<int>());
 
-            IStructuralComparable longerArray = new int[] { 1, 2, 3, 4 };
-            IStructuralComparable longerImmArray = ImmutableArray.Create((int[])longerArray);
+            IStructuralComparable longerArray = new int[] { 1, 2, 3, 4 }.AsStructuralComparable();
+            IStructuralComparable longerImmArray = ImmutableArray.Create(longerArray.CastAsArray<int>());
 
             Assert.Equal(array.CompareTo(equalArray, Comparer<int>.Default), immArray.CompareTo(equalImmArray, Comparer<int>.Default));
 
@@ -1131,10 +1135,10 @@ namespace System.Collections.Immutable.Test
         [Fact]
         public void StructuralComparableArrayInterop()
         {
-            IStructuralComparable array = new int[3] { 1, 2, 3 };
-            IStructuralComparable equalArray = new int[3] { 1, 2, 3 };
-            IStructuralComparable immArray = ImmutableArray.Create((int[])array);
-            IStructuralComparable equalImmArray = ImmutableArray.Create((int[])equalArray);
+            IStructuralComparable array = new int[3] { 1, 2, 3 }.AsStructuralComparable();
+            IStructuralComparable equalArray = new int[3] { 1, 2, 3 }.AsStructuralComparable();
+            IStructuralComparable immArray = ImmutableArray.Create(array.CastAsArray<int>());
+            IStructuralComparable equalImmArray = ImmutableArray.Create(equalArray.CastAsArray<int>());
 
             Assert.Equal(array.CompareTo(equalArray, Comparer<int>.Default), immArray.CompareTo(equalArray, Comparer<int>.Default));
         }

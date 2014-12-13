@@ -1386,6 +1386,13 @@ namespace System.Collections.Immutable
         bool IStructuralEquatable.Equals(object other, IEqualityComparer comparer)
         {
             Array otherArray = other as Array;
+#if !NET40PLUS
+            if (otherArray == null)
+            {
+                otherArray = (other as IStructuralComparable).AsArray();
+            }
+#endif
+
             if (otherArray == null)
             {
                 var theirs = other as IImmutableArray;
@@ -1404,7 +1411,7 @@ namespace System.Collections.Immutable
                 }
             }
 
-            IStructuralEquatable ours = this.array;
+            IStructuralEquatable ours = this.array.AsStructuralEquatable();
             return ours.Equals(otherArray, comparer);
         }
 
@@ -1415,7 +1422,7 @@ namespace System.Collections.Immutable
         /// <returns>The hash code for the current instance.</returns>
         int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
         {
-            IStructuralEquatable ours = this.array;
+            IStructuralEquatable ours = this.array.AsStructuralEquatable();
             return ours != null ? ours.GetHashCode(comparer) : this.GetHashCode();
         }
 
@@ -1435,6 +1442,13 @@ namespace System.Collections.Immutable
         int IStructuralComparable.CompareTo(object other, IComparer comparer)
         {
             Array otherArray = other as Array;
+#if !NET40PLUS
+            if (otherArray == null)
+            {
+                otherArray = (other as IStructuralComparable).AsArray();
+            }
+#endif
+
             if (otherArray == null)
             {
                 var theirs = other as IImmutableArray;
@@ -1455,7 +1469,7 @@ namespace System.Collections.Immutable
 
             if (otherArray != null)
             {
-                IStructuralComparable ours = this.array;
+                IStructuralComparable ours = this.array.AsStructuralComparable();
                 return ours.CompareTo(otherArray, comparer);
             }
 

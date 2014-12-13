@@ -11,6 +11,9 @@ namespace System.Collections.Immutable.Test
 #if !NET45PLUS
     extern alias rax;
     using rax::System.Collections.Generic;
+#if !NET40PLUS
+    using rax::System.Diagnostics.Contracts;
+#endif
 #endif
 
     public class ImmutableSortedSetTest : ImmutableSetTest

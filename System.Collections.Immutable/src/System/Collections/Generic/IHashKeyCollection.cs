@@ -10,7 +10,11 @@ namespace System.Collections.Generic
     /// </summary>
     /// <typeparam name="TKey">The type of element hashed in the collection.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+#if NET40PLUS
     internal interface IHashKeyCollection<in TKey>
+#else
+    internal interface IHashKeyCollection<TKey>
+#endif
     {
         /// <summary>
         /// Gets the comparer used to obtain hash codes for the keys and check equality.

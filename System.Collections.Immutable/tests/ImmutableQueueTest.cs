@@ -8,6 +8,15 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections;
+    using rax::System.Collections.Generic;
+#if !NET40PLUS
+    using rax::System.Diagnostics.Contracts;
+#endif
+#endif
+
     public class ImmutableQueueTest : SimpleElementImmutablesTestBase
     {
         private void EnqueueDequeueTestHelper<T>(params T[] items)

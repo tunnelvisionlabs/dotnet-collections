@@ -42,7 +42,11 @@ namespace System.Collections.Generic
     [ContractClass(typeof(IReadOnlyCollectionContract<>))]
 #endif
     // If we ever implement more interfaces on IReadOnlyCollection, we should also update RuntimeTypeCache.PopulateInterfaces() in rttype.cs
+#if NET40PLUS
     public interface IReadOnlyCollection<out T> : IEnumerable<T>
+#else
+    public interface IReadOnlyCollection<T> : IEnumerable<T>
+#endif
     {
         int Count { get; }
     }

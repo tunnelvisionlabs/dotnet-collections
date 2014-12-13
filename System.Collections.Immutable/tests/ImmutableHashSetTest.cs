@@ -8,6 +8,15 @@ using Xunit;
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections;
+    using rax::System.Collections.Generic;
+#if !NET40PLUS
+    using rax::System.Diagnostics.Contracts;
+#endif
+#endif
+
     public class ImmutableHashSetTest : ImmutableSetTest
     {
         protected override bool IncludesGetHashCodeDerivative
@@ -167,7 +176,11 @@ namespace System.Collections.Immutable.Test
 
         protected override ISet<T> EmptyMutable<T>()
         {
+#if NET40PLUS
             return new HashSet<T>();
+#else
+            return new SortedSet<T>();
+#endif
         }
 
 #if !NET45PLUS

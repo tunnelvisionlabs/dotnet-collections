@@ -5,39 +5,39 @@
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D550DC59-8708-47FC-87C4-013794221FBC}</ProjectGuid>
+    <ProjectGuid>{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System.Collections.Immutable</RootNamespace>
     <AssemblyName>Rackspace.Collections.Immutable</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
-    <BaseIntermediateOutputPath>obj\net40-client\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\net35-client\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE;NET40;NET40PLUS;NET35PLUS</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;NET35;NET35PLUS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>System.Collections.Immutable.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <OutputPath>bin\net40-client\Debug\</OutputPath>
+    <OutputPath>bin\net35-client\Debug\</OutputPath>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NET40;NET40PLUS;NET35PLUS</DefineConstants>
+    <DefineConstants>TRACE;NET35;NET35PLUS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <OutputPath>bin\net40-client\Debug\</OutputPath>
+    <OutputPath>bin\net35-client\Debug\</OutputPath>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Interfaces.cd" />
-    <None Include="packages.System.Collections.Immutable.net40-client.config" />
+    <None Include="packages.System.Collections.Immutable.net35-client.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

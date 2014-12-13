@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.net35-client", "System.Collections.Immutable\src\System.Collections.Immutable.net35-client.csproj", "{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.net35-client", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.net35-client.csproj", "{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.net40-client", "System.Collections.Immutable\src\System.Collections.Immutable.net40-client.csproj", "{D550DC59-8708-47FC-87C4-013794221FBC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.net40-client", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.net40-client.csproj", "{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}"
@@ -21,6 +25,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D550DC59-8708-47FC-87C4-013794221FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D550DC59-8708-47FC-87C4-013794221FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D550DC59-8708-47FC-87C4-013794221FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU

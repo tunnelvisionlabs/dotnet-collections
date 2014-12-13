@@ -1,4 +1,4 @@
-﻿#if PORTABLE && !NET45PLUS
+﻿#if !NET40PLUS || (PORTABLE && !NET45PLUS)
 
 using System;
 using System.Collections;
@@ -71,7 +71,7 @@ namespace System.Collections.Generic {
         /// <summary>
         /// Instantiates a BitHelper with a heap alloc'd array of ints
         /// </summary>
-        /// <param name="bitArray">int array to hold bits</param>
+        /// <param name="bitArrayPtr">int array to hold bits</param>
         /// <param name="length">length of int array</param>
         // <SecurityKernel Critical="True" Ring="0">
         // <UsesUnsafeCode Name="Field: m_arrayPtr" />

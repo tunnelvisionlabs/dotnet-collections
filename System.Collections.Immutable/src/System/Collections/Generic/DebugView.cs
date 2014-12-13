@@ -1,4 +1,4 @@
-﻿#if PORTABLE && !NET45PLUS
+﻿#if !NET40PLUS || (PORTABLE && !NET45PLUS)
 
 // ==++==
 // 

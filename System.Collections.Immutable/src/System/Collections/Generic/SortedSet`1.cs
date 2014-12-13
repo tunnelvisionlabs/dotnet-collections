@@ -1,4 +1,4 @@
-﻿#if !PORTABLE || NET45PLUS
+﻿#if NET40PLUS && (!PORTABLE || NET45PLUS)
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -1617,8 +1617,10 @@ namespace System.Collections.Generic {
             BitHelper bitHelper;
 #if !PORTABLE
             if (intArrayLength <= StackAllocThreshold) {
-                int* bitArrayPtr = stackalloc int[intArrayLength];
-                bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
+                unsafe {
+                    int* bitArrayPtr = stackalloc int[intArrayLength];
+                    bitHelper = new BitHelper(bitArrayPtr, intArrayLength);
+                }
             } else {
 #endif
                 int[] bitArray = new int[intArrayLength];

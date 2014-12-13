@@ -10,6 +10,14 @@ using SetTriad = System.Tuple<System.Collections.Generic.IEnumerable<int>, Syste
 
 namespace System.Collections.Immutable.Test
 {
+#if !NET45PLUS
+    extern alias rax;
+    using rax::System.Collections.Generic;
+#if !NET40PLUS
+    using rax::System.Diagnostics.Contracts;
+#endif
+#endif
+
     public abstract class ImmutableSetTest : ImmutablesTestBase
     {
         [Fact]
