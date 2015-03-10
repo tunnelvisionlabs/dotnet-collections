@@ -36,16 +36,16 @@ namespace System.Collections.Immutable
             /// <summary>
             /// One of the values in this bucket.
             /// </summary>
-            private readonly T firstValue;
+            private readonly T _firstValue;
 
             /// <summary>
             /// Any other elements that hash to the same value.
             /// </summary>
             /// <value>
-            /// This is null if and only if the entire bucket is empty (including <see cref="firstValue"/>).  
-            /// It's empty if <see cref="firstValue"/> has an element but no additional elements.
+            /// This is null if and only if the entire bucket is empty (including <see cref="_firstValue"/>).  
+            /// It's empty if <see cref="_firstValue"/> has an element but no additional elements.
             /// </value>
-            private readonly ImmutableList<T>.Node additionalElements;
+            private readonly ImmutableList<T>.Node _additionalElements;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="HashBucket"/> struct.
@@ -54,8 +54,8 @@ namespace System.Collections.Immutable
             /// <param name="additionalElements">The additional elements.</param>
             private HashBucket(T firstElement, ImmutableList<T>.Node additionalElements = null)
             {
-                this.firstValue = firstElement;
-                this.additionalElements = additionalElements ?? ImmutableList<T>.Node.EmptyNode;
+                _firstValue = firstElement;
+                _additionalElements = additionalElements ?? ImmutableList<T>.Node.EmptyNode;
             }
 
             /// <summary>
@@ -66,7 +66,7 @@ namespace System.Collections.Immutable
             /// </value>
             internal bool IsEmpty
             {
-                get { return this.additionalElements == null; }
+                get { return _additionalElements == null; }
             }
 
             /// <summary>
@@ -92,14 +92,14 @@ namespace System.Collections.Immutable
                     return new HashBucket(value);
                 }
 
-                if (valueComparer.Equals(value, this.firstValue) || this.additionalElements.IndexOf(value, valueComparer) >= 0)
+                if (valueComparer.Equals(value, _firstValue) || _additionalElements.IndexOf(value, valueComparer) >= 0)
                 {
                     result = OperationResult.NoChangeRequired;
                     return this;
                 }
 
                 result = OperationResult.SizeChanged;
-                return new HashBucket(this.firstValue, this.additionalElements.Add(value));
+                return new HashBucket(_firstValue, _additionalElements.Add(value));
             }
 
             /// <summary>
@@ -114,7 +114,7 @@ namespace System.Collections.Immutable
                     return false;
                 }
 
-                return valueComparer.Equals(value, this.firstValue) || this.additionalElements.IndexOf(value, valueComparer) >= 0;
+                return valueComparer.Equals(value, _firstValue) || _additionalElements.IndexOf(value, valueComparer) >= 0;
             }
 
             /// <summary>
@@ -130,16 +130,16 @@ namespace System.Collections.Immutable
             {
                 if (!this.IsEmpty)
                 {
-                    if (valueComparer.Equals(value, this.firstValue))
+                    if (valueComparer.Equals(value, _firstValue))
                     {
-                        existingValue = this.firstValue;
+                        existingValue = _firstValue;
                         return true;
                     }
 
-                    int index = this.additionalElements.IndexOf(value, valueComparer);
+                    int index = _additionalElements.IndexOf(value, valueComparer);
                     if (index >= 0)
                     {
-                        existingValue = this.additionalElements[index];
+                        existingValue = _additionalElements[index];
                         return true;
                     }
                 }
@@ -163,9 +163,9 @@ namespace System.Collections.Immutable
                     return this;
                 }
 
-                if (equalityComparer.Equals(this.firstValue, value))
+                if (equalityComparer.Equals(_firstValue, value))
                 {
-                    if (this.additionalElements.IsEmpty)
+                    if (_additionalElements.IsEmpty)
                     {
                         result = OperationResult.SizeChanged;
                         return new HashBucket();
@@ -174,13 +174,13 @@ namespace System.Collections.Immutable
                     {
                         // We can promote any element from the list into the first position, but it's most efficient
                         // to remove the root node in the binary tree that implements the list.
-                        int indexOfRootNode = this.additionalElements.Left.Count;
+                        int indexOfRootNode = _additionalElements.Left.Count;
                         result = OperationResult.SizeChanged;
-                        return new HashBucket(this.additionalElements.Key, this.additionalElements.RemoveAt(indexOfRootNode));
+                        return new HashBucket(_additionalElements.Key, _additionalElements.RemoveAt(indexOfRootNode));
                     }
                 }
 
-                int index = this.additionalElements.IndexOf(value, equalityComparer);
+                int index = _additionalElements.IndexOf(value, equalityComparer);
                 if (index < 0)
                 {
                     result = OperationResult.NoChangeRequired;
@@ -189,7 +189,7 @@ namespace System.Collections.Immutable
                 else
                 {
                     result = OperationResult.SizeChanged;
-                    return new HashBucket(this.firstValue, this.additionalElements.RemoveAt(index));
+                    return new HashBucket(_firstValue, _additionalElements.RemoveAt(index));
                 }
             }
 
@@ -198,9 +198,9 @@ namespace System.Collections.Immutable
             /// </summary>
             internal void Freeze()
             {
-                if (this.additionalElements != null)
+                if (_additionalElements != null)
                 {
-                    this.additionalElements.Freeze();
+                    _additionalElements.Freeze();
                 }
             }
 
@@ -212,22 +212,22 @@ namespace System.Collections.Immutable
                 /// <summary>
                 /// The bucket being enumerated.
                 /// </summary>
-                private readonly HashBucket bucket;
+                private readonly HashBucket _bucket;
 
                 /// <summary>
                 /// A value indicating whether this enumerator has been disposed.
                 /// </summary>
-                private bool disposed;
+                private bool _disposed;
 
                 /// <summary>
                 /// The current position of this enumerator.
                 /// </summary>
-                private Position currentPosition;
+                private Position _currentPosition;
 
                 /// <summary>
                 /// The enumerator that represents the current position over the additionalValues of the HashBucket.
                 /// </summary>
-                private ImmutableList<T>.Enumerator additionalEnumerator;
+                private ImmutableList<T>.Enumerator _additionalEnumerator;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;.HashBucket.Enumerator"/> struct.
@@ -235,10 +235,10 @@ namespace System.Collections.Immutable
                 /// <param name="bucket">The bucket.</param>
                 internal Enumerator(HashBucket bucket)
                 {
-                    this.disposed = false;
-                    this.bucket = bucket;
-                    this.currentPosition = Position.BeforeFirst;
-                    this.additionalEnumerator = default(ImmutableList<T>.Enumerator);
+                    _disposed = false;
+                    _bucket = bucket;
+                    _currentPosition = Position.BeforeFirst;
+                    _additionalEnumerator = default(ImmutableList<T>.Enumerator);
                 }
 
                 /// <summary>
@@ -283,12 +283,12 @@ namespace System.Collections.Immutable
                     get
                     {
                         this.ThrowIfDisposed();
-                        switch (this.currentPosition)
+                        switch (_currentPosition)
                         {
                             case Position.First:
-                                return this.bucket.firstValue;
+                                return _bucket._firstValue;
                             case Position.Additional:
-                                return this.additionalEnumerator.Current;
+                                return _additionalEnumerator.Current;
                             default:
                                 throw new InvalidOperationException();
                         }
@@ -305,29 +305,29 @@ namespace System.Collections.Immutable
                 public bool MoveNext()
                 {
                     this.ThrowIfDisposed();
-                    if (this.bucket.IsEmpty)
+                    if (_bucket.IsEmpty)
                     {
-                        this.currentPosition = Position.End;
+                        _currentPosition = Position.End;
                         return false;
                     }
 
-                    switch (this.currentPosition)
+                    switch (_currentPosition)
                     {
                         case Position.BeforeFirst:
-                            this.currentPosition = Position.First;
+                            _currentPosition = Position.First;
                             return true;
                         case Position.First:
-                            if (this.bucket.additionalElements.IsEmpty)
+                            if (_bucket._additionalElements.IsEmpty)
                             {
-                                this.currentPosition = Position.End;
+                                _currentPosition = Position.End;
                                 return false;
                             }
 
-                            this.currentPosition = Position.Additional;
-                            this.additionalEnumerator = new ImmutableList<T>.Enumerator(this.bucket.additionalElements);
-                            return this.additionalEnumerator.MoveNext();
+                            _currentPosition = Position.Additional;
+                            _additionalEnumerator = new ImmutableList<T>.Enumerator(_bucket._additionalElements);
+                            return _additionalEnumerator.MoveNext();
                         case Position.Additional:
-                            return this.additionalEnumerator.MoveNext();
+                            return _additionalEnumerator.MoveNext();
                         case Position.End:
                             return false;
                         default:
@@ -342,8 +342,8 @@ namespace System.Collections.Immutable
                 public void Reset()
                 {
                     this.ThrowIfDisposed();
-                    this.additionalEnumerator.Dispose();
-                    this.currentPosition = Position.BeforeFirst;
+                    _additionalEnumerator.Dispose();
+                    _currentPosition = Position.BeforeFirst;
                 }
 
                 /// <summary>
@@ -351,8 +351,8 @@ namespace System.Collections.Immutable
                 /// </summary>
                 public void Dispose()
                 {
-                    this.disposed = true;
-                    this.additionalEnumerator.Dispose();
+                    _disposed = true;
+                    _additionalEnumerator.Dispose();
                 }
 
                 /// <summary>
@@ -360,7 +360,7 @@ namespace System.Collections.Immutable
                 /// </summary>
                 private void ThrowIfDisposed()
                 {
-                    if (this.disposed)
+                    if (_disposed)
                     {
                         Validation.Requires.FailObjectDisposed(this);
                     }

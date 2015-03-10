@@ -704,7 +704,7 @@ namespace System.Collections.Immutable
             int index = self.IndexOf(oldValue, equalityComparer);
             if (index < 0)
             {
-                throw new ArgumentException(Strings.CannotFindOldValue, "oldValue");
+                throw new ArgumentException(SR.CannotFindOldValue, "oldValue");
             }
 
             return self.SetItem(index, newValue);
@@ -1035,6 +1035,33 @@ namespace System.Collections.Immutable
         public bool Equals(ImmutableArray<T> other)
         {
             return this.array == other.array;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableArray{T}"/> struct based on the contents
+        /// of an existing instance, allowing a covariant static cast to efficiently reuse the existing array.
+        /// </summary>
+        /// <param name="items">The array to initialize the array with. No copy is made.</param>
+        /// <remarks>
+        /// Covariant upcasts from this method may be reversed by calling the
+        /// <see cref="ImmutableArray{T}.As{TOther}"/>  or <see cref="ImmutableArray{T}.CastArray{TOther}"/>method.
+        /// </remarks>
+        [Pure]
+        public static ImmutableArray<T> CastUp<TDerived>(ImmutableArray<TDerived> items)
+            where TDerived : class, T
+        {
+            return new ImmutableArray<T>(items.array);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableArray{T}"/> struct by casting the underlying
+        /// array to an array of type <typeparam name="TOther"/>.
+        /// </summary>
+        /// <exception cref="InvalidCastException">Thrown if the cast is illegal.</exception>
+        [Pure]
+        public ImmutableArray<TOther> CastArray<TOther>() where TOther : class
+        {
+            return new ImmutableArray<TOther>((TOther[])(object)array);
         }
 
         /// <summary>
@@ -1550,7 +1577,7 @@ namespace System.Collections.Immutable
                     }
                     else if (self.array == null ^ theirs.Array == null)
                     {
-                        throw new ArgumentException(Strings.ArrayInitializedStateNotEqual, "other");
+                        throw new ArgumentException(SR.ArrayInitializedStateNotEqual, "other");
                     }
 
                     otherArray = theirs.Array;
@@ -1563,7 +1590,7 @@ namespace System.Collections.Immutable
                 return ours.CompareTo(otherArray, comparer);
             }
 
-            throw new ArgumentException(Strings.ArrayLengthsNotEqual, "other");
+            throw new ArgumentException(SR.ArrayLengthsNotEqual, "other");
         }
 
         #endregion
@@ -1602,7 +1629,7 @@ namespace System.Collections.Immutable
         {
             if (this.IsDefault)
             {
-                throw new InvalidOperationException(Strings.InvalidOperationOnDefaultArray);
+                throw new InvalidOperationException(SR.InvalidOperationOnDefaultArray);
             }
         }
 

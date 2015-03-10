@@ -1,8 +1,9 @@
-﻿#if !NET45PLUS
+#if !NET45PLUS
 
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace System.Collections.Immutable
     /// and then an interface call to Int32's IComparable's CompareTo method as part of
     /// the GenericComparer{Int32}'s Compare implementation.
     /// </remarks>
-    [DebuggerDisplay("{key} = {value}")]
+    [DebuggerDisplay("{_key} = {_value}")]
     internal sealed class SortedInt32KeyNode<TValue> : IBinaryTree
     {
         /// <summary>
@@ -33,7 +34,7 @@ namespace System.Collections.Immutable
         /// <summary>
         /// The Int32 key associated with this node.
         /// </summary>
-        private readonly int key;
+        private readonly int _key;
 
         /// <summary>
         /// The value associated with this node.
@@ -42,7 +43,7 @@ namespace System.Collections.Immutable
         /// Sadly, this field could be readonly but doing so breaks serialization due to bug: 
         /// http://connect.microsoft.com/VisualStudio/feedback/details/312970/weird-argumentexception-when-deserializing-field-in-typedreferences-cannot-be-static-or-init-only
         /// </remarks>
-        private TValue value;
+        private TValue _value;
 
         /// <summary>
         /// A value indicating whether this node has been frozen (made immutable).
@@ -51,29 +52,29 @@ namespace System.Collections.Immutable
         /// Nodes must be frozen before ever being observed by a wrapping collection type
         /// to protect collections from further mutations.
         /// </remarks>
-        private bool frozen;
+        private bool _frozen;
 
         /// <summary>
         /// The depth of the tree beneath this node.
         /// </summary>
-        private byte height; // AVL tree height <= ~1.44 * log2(numNodes + 2)
+        private byte _height; // AVL tree height <= ~1.44 * log2(numNodes + 2)
 
         /// <summary>
         /// The left tree.
         /// </summary>
-        private SortedInt32KeyNode<TValue> left;
+        private SortedInt32KeyNode<TValue> _left;
 
         /// <summary>
         /// The right tree.
         /// </summary>
-        private SortedInt32KeyNode<TValue> right;
+        private SortedInt32KeyNode<TValue> _right;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SortedInt32KeyNode{TValue}"/> class that is pre-frozen.
         /// </summary>
         private SortedInt32KeyNode()
         {
-            this.frozen = true; // the empty node is *always* frozen.
+            _frozen = true; // the empty node is *always* frozen.
         }
 
         /// <summary>
@@ -88,15 +89,15 @@ namespace System.Collections.Immutable
         {
             Requires.NotNull(left, "left");
             Requires.NotNull(right, "right");
-            Debug.Assert(!frozen || (left.frozen && right.frozen));
+            Debug.Assert(!frozen || (left._frozen && right._frozen));
 
-            this.key = key;
-            this.value = value;
-            this.left = left;
-            this.right = right;
-            this.frozen = frozen;
+            _key = key;
+            _value = value;
+            _left = left;
+            _right = right;
+            _frozen = frozen;
 
-            this.height = checked((byte)(1 + Math.Max(left.height, right.height)));
+            _height = checked((byte)(1 + Math.Max(left._height, right._height)));
         }
 
         /// <summary>
@@ -105,32 +106,32 @@ namespace System.Collections.Immutable
         /// <value>
         /// <c>true</c> if this instance is empty; otherwise, <c>false</c>.
         /// </value>
-        public bool IsEmpty { get { return this.left == null; } }
+        public bool IsEmpty { get { return _left == null; } }
 
         /// <summary>
         /// Gets the height of the tree beneath this node.
         /// </summary>
-        public int Height { get { return this.height; } }
+        public int Height { get { return _height; } }
 
         /// <summary>
         /// Gets the left branch of this node.
         /// </summary>
-        public SortedInt32KeyNode<TValue> Left { get { return this.left; } }
+        public SortedInt32KeyNode<TValue> Left { get { return _left; } }
 
         /// <summary>
         /// Gets the right branch of this node.
         /// </summary>
-        public SortedInt32KeyNode<TValue> Right { get { return this.right; } }
+        public SortedInt32KeyNode<TValue> Right { get { return _right; } }
 
         /// <summary>
         /// Gets the left branch of this node.
         /// </summary>
-        IBinaryTree IBinaryTree.Left { get { return this.left; } }
+        IBinaryTree IBinaryTree.Left { get { return _left; } }
 
         /// <summary>
         /// Gets the right branch of this node.
         /// </summary>
-        IBinaryTree IBinaryTree.Right { get { return this.right; } }
+        IBinaryTree IBinaryTree.Right { get { return _right; } }
 
         /// <summary>
         /// Gets the number of elements contained by this node and below.
@@ -145,7 +146,7 @@ namespace System.Collections.Immutable
         /// </summary>
         public KeyValuePair<int, TValue> Value
         {
-            get { return new KeyValuePair<int, TValue>(this.key, this.value); }
+            get { return new KeyValuePair<int, TValue>(_key, _value); }
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace System.Collections.Immutable
         internal TValue GetValueOrDefault(int key)
         {
             var match = this.Search(key);
-            return match.IsEmpty ? default(TValue) : match.value;
+            return match.IsEmpty ? default(TValue) : match._value;
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace System.Collections.Immutable
             }
             else
             {
-                value = match.value;
+                value = match._value;
                 return true;
             }
         }
@@ -239,16 +240,16 @@ namespace System.Collections.Immutable
         internal void Freeze(Action<KeyValuePair<int, TValue>> freezeAction = null)
         {
             // If this node is frozen, all its descendents must already be frozen.
-            if (!this.frozen)
+            if (!_frozen)
             {
                 if (freezeAction != null)
                 {
-                    freezeAction(new KeyValuePair<int, TValue>(this.key, this.value));
+                    freezeAction(new KeyValuePair<int, TValue>(_key, _value));
                 }
 
-                this.left.Freeze(freezeAction);
-                this.right.Freeze(freezeAction);
-                this.frozen = true;
+                _left.Freeze(freezeAction);
+                _right.Freeze(freezeAction);
+                _frozen = true;
             }
         }
 
@@ -262,13 +263,13 @@ namespace System.Collections.Immutable
             Requires.NotNull(tree, "tree");
             Debug.Assert(!tree.IsEmpty);
 
-            if (tree.right.IsEmpty)
+            if (tree._right.IsEmpty)
             {
                 return tree;
             }
 
-            var right = tree.right;
-            return right.Mutate(left: tree.Mutate(right: right.left));
+            var right = tree._right;
+            return right.Mutate(left: tree.Mutate(right: right._left));
         }
 
         /// <summary>
@@ -281,13 +282,13 @@ namespace System.Collections.Immutable
             Requires.NotNull(tree, "tree");
             Debug.Assert(!tree.IsEmpty);
 
-            if (tree.left.IsEmpty)
+            if (tree._left.IsEmpty)
             {
                 return tree;
             }
 
-            var left = tree.left;
-            return left.Mutate(right: tree.Mutate(left: left.right));
+            var left = tree._left;
+            return left.Mutate(right: tree.Mutate(left: left._right));
         }
 
         /// <summary>
@@ -300,12 +301,12 @@ namespace System.Collections.Immutable
             Requires.NotNull(tree, "tree");
             Debug.Assert(!tree.IsEmpty);
 
-            if (tree.right.IsEmpty)
+            if (tree._right.IsEmpty)
             {
                 return tree;
             }
 
-            SortedInt32KeyNode<TValue> rotatedRightChild = tree.Mutate(right: RotateRight(tree.right));
+            SortedInt32KeyNode<TValue> rotatedRightChild = tree.Mutate(right: RotateRight(tree._right));
             return RotateLeft(rotatedRightChild);
         }
 
@@ -319,12 +320,12 @@ namespace System.Collections.Immutable
             Requires.NotNull(tree, "tree");
             Debug.Assert(!tree.IsEmpty);
 
-            if (tree.left.IsEmpty)
+            if (tree._left.IsEmpty)
             {
                 return tree;
             }
 
-            SortedInt32KeyNode<TValue> rotatedLeftChild = tree.Mutate(left: RotateLeft(tree.left));
+            SortedInt32KeyNode<TValue> rotatedLeftChild = tree.Mutate(left: RotateLeft(tree._left));
             return RotateRight(rotatedLeftChild);
         }
 
@@ -339,7 +340,7 @@ namespace System.Collections.Immutable
             Requires.NotNull(tree, "tree");
             Debug.Assert(!tree.IsEmpty);
 
-            return tree.right.height - tree.left.height;
+            return tree._right._height - tree._left._height;
         }
 
         /// <summary>
@@ -381,12 +382,12 @@ namespace System.Collections.Immutable
 
             if (IsRightHeavy(tree))
             {
-                return Balance(tree.right) < 0 ? DoubleLeft(tree) : RotateLeft(tree);
+                return Balance(tree._right) < 0 ? DoubleLeft(tree) : RotateLeft(tree);
             }
 
             if (IsLeftHeavy(tree))
             {
-                return Balance(tree.left) > 0 ? DoubleRight(tree) : RotateRight(tree);
+                return Balance(tree._left) > 0 ? DoubleRight(tree) : RotateRight(tree);
             }
 
             return tree;
@@ -443,17 +444,17 @@ namespace System.Collections.Immutable
             else
             {
                 SortedInt32KeyNode<TValue> result = this;
-                if (key > this.key)
+                if (key > _key)
                 {
-                    var newRight = this.right.SetOrAdd(key, value, valueComparer, overwriteExistingValue, out replacedExistingValue, out mutated);
+                    var newRight = _right.SetOrAdd(key, value, valueComparer, overwriteExistingValue, out replacedExistingValue, out mutated);
                     if (mutated)
                     {
                         result = this.Mutate(right: newRight);
                     }
                 }
-                else if (key < this.key)
+                else if (key < _key)
                 {
-                    var newLeft = this.left.SetOrAdd(key, value, valueComparer, overwriteExistingValue, out replacedExistingValue, out mutated);
+                    var newLeft = _left.SetOrAdd(key, value, valueComparer, overwriteExistingValue, out replacedExistingValue, out mutated);
                     if (mutated)
                     {
                         result = this.Mutate(left: newLeft);
@@ -461,7 +462,7 @@ namespace System.Collections.Immutable
                 }
                 else
                 {
-                    if (valueComparer.Equals(this.value, value))
+                    if (valueComparer.Equals(_value, value))
                     {
                         mutated = false;
                         return this;
@@ -470,11 +471,11 @@ namespace System.Collections.Immutable
                     {
                         mutated = true;
                         replacedExistingValue = true;
-                        result = new SortedInt32KeyNode<TValue>(key, value, this.left, this.right);
+                        result = new SortedInt32KeyNode<TValue>(key, value, _left, _right);
                     }
                     else
                     {
-                        throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Strings.DuplicateKey, key));
+                        throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, SR.DuplicateKey, key));
                     }
                 }
 
@@ -498,7 +499,7 @@ namespace System.Collections.Immutable
             else
             {
                 SortedInt32KeyNode<TValue> result = this;
-                if (key == this.key)
+                if (key == _key)
                 {
                     // We have a match.
                     mutated = true;
@@ -506,36 +507,36 @@ namespace System.Collections.Immutable
                     // If this is a leaf, just remove it 
                     // by returning Empty.  If we have only one child,
                     // replace the node with the child.
-                    if (this.right.IsEmpty && this.left.IsEmpty)
+                    if (_right.IsEmpty && _left.IsEmpty)
                     {
                         result = EmptyNode;
                     }
-                    else if (this.right.IsEmpty && !this.left.IsEmpty)
+                    else if (_right.IsEmpty && !_left.IsEmpty)
                     {
-                        result = this.left;
+                        result = _left;
                     }
-                    else if (!this.right.IsEmpty && this.left.IsEmpty)
+                    else if (!_right.IsEmpty && _left.IsEmpty)
                     {
-                        result = this.right;
+                        result = _right;
                     }
                     else
                     {
                         // We have two children. Remove the next-highest node and replace
                         // this node with it.
-                        var successor = this.right;
-                        while (!successor.left.IsEmpty)
+                        var successor = _right;
+                        while (!successor._left.IsEmpty)
                         {
-                            successor = successor.left;
+                            successor = successor._left;
                         }
 
                         bool dummyMutated;
-                        var newRight = this.right.Remove(successor.key, out dummyMutated);
-                        result = successor.Mutate(left: this.left, right: newRight);
+                        var newRight = _right.Remove(successor._key, out dummyMutated);
+                        result = successor.Mutate(left: _left, right: newRight);
                     }
                 }
-                else if (key < this.key)
+                else if (key < _key)
                 {
-                    var newLeft = this.left.Remove(key, out mutated);
+                    var newLeft = _left.Remove(key, out mutated);
                     if (mutated)
                     {
                         result = this.Mutate(left: newLeft);
@@ -543,7 +544,7 @@ namespace System.Collections.Immutable
                 }
                 else
                 {
-                    var newRight = this.right.Remove(key, out mutated);
+                    var newRight = _right.Remove(key, out mutated);
                     if (mutated)
                     {
                         result = this.Mutate(right: newRight);
@@ -564,23 +565,23 @@ namespace System.Collections.Immutable
         /// <returns>The mutated (or created) node.</returns>
         private SortedInt32KeyNode<TValue> Mutate(SortedInt32KeyNode<TValue> left = null, SortedInt32KeyNode<TValue> right = null)
         {
-            if (this.frozen)
+            if (_frozen)
             {
-                return new SortedInt32KeyNode<TValue>(this.key, this.value, left ?? this.left, right ?? this.right);
+                return new SortedInt32KeyNode<TValue>(_key, _value, left ?? _left, right ?? _right);
             }
             else
             {
                 if (left != null)
                 {
-                    this.left = left;
+                    _left = left;
                 }
 
                 if (right != null)
                 {
-                    this.right = right;
+                    _right = right;
                 }
 
-                this.height = checked((byte)(1 + Math.Max(this.left.height, this.right.height)));
+                _height = checked((byte)(1 + Math.Max(_left._height, _right._height)));
                 return this;
             }
         }
@@ -592,17 +593,17 @@ namespace System.Collections.Immutable
         [Pure]
         private SortedInt32KeyNode<TValue> Search(int key)
         {
-            if (this.IsEmpty || key == this.key)
+            if (this.IsEmpty || key == _key)
             {
                 return this;
             }
 
-            if (key > this.key)
+            if (key > _key)
             {
-                return this.right.Search(key);
+                return _right.Search(key);
             }
 
-            return this.left.Search(key);
+            return _left.Search(key);
         }
 
         /// <summary>
@@ -627,29 +628,29 @@ namespace System.Collections.Immutable
             /// <remarks>
             /// We utilize this resource pool to make "allocation free" enumeration achievable.
             /// </remarks>
-            private static readonly SecureObjectPool<Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>, Enumerator> enumeratingStacks =
+            private static readonly SecureObjectPool<Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>, Enumerator> s_enumeratingStacks =
                 new SecureObjectPool<Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>, Enumerator>();
 
             /// <summary>
             /// A unique ID for this instance of this enumerator.
             /// Used to protect pooled objects from use after they are recycled.
             /// </summary>
-            private readonly int poolUserId;
+            private readonly int _poolUserId;
 
             /// <summary>
             /// The set being enumerated.
             /// </summary>
-            private SortedInt32KeyNode<TValue> root;
+            private SortedInt32KeyNode<TValue> _root;
 
             /// <summary>
             /// The stack to use for enumerating the binary tree.
             /// </summary>
-            private SecurePooledObject<Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>> stack;
+            private SecurePooledObject<Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>> _stack;
 
             /// <summary>
             /// The node currently selected.
             /// </summary>
-            private SortedInt32KeyNode<TValue> current;
+            private SortedInt32KeyNode<TValue> _current;
 
             /// <summary>
             /// Initializes an Enumerator structure.
@@ -659,18 +660,18 @@ namespace System.Collections.Immutable
             {
                 Requires.NotNull(root, "root");
 
-                this.root = root;
-                this.current = null;
-                this.poolUserId = SecureObjectPool.NewId();
-                this.stack = null;
-                if (!this.root.IsEmpty)
+                _root = root;
+                _current = null;
+                _poolUserId = SecureObjectPool.NewId();
+                _stack = null;
+                if (!_root.IsEmpty)
                 {
-                    if (!enumeratingStacks.TryTake(this, out this.stack))
+                    if (!s_enumeratingStacks.TryTake(this, out _stack))
                     {
-                        this.stack = enumeratingStacks.PrepNew(this, new Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>(root.Height));
+                        _stack = s_enumeratingStacks.PrepNew(this, new Stack<RefAsValueType<SortedInt32KeyNode<TValue>>>(root.Height));
                     }
 
-                    this.PushLeft(this.root);
+                    this.PushLeft(_root);
                 }
             }
 
@@ -682,9 +683,9 @@ namespace System.Collections.Immutable
                 get
                 {
                     this.ThrowIfDisposed();
-                    if (this.current != null)
+                    if (_current != null)
                     {
-                        return this.current.Value;
+                        return _current.Value;
                     }
 
                     throw new InvalidOperationException();
@@ -694,7 +695,7 @@ namespace System.Collections.Immutable
             /// <inheritdoc/>
             int ISecurePooledObjectUser.PoolUserId
             {
-                get { return this.poolUserId; }
+                get { return _poolUserId; }
             }
 
             /// <summary>
@@ -710,16 +711,16 @@ namespace System.Collections.Immutable
             /// </summary>
             public void Dispose()
             {
-                this.root = null;
-                this.current = null;
+                _root = null;
+                _current = null;
                 Stack<RefAsValueType<SortedInt32KeyNode<TValue>>> stack;
-                if (this.stack != null && this.stack.TryUse(ref this, out stack))
+                if (_stack != null && _stack.TryUse(ref this, out stack))
                 {
                     stack.ClearFastWhenEmpty();
-                    enumeratingStacks.TryAdd(this, this.stack);
+                    s_enumeratingStacks.TryAdd(this, _stack);
                 }
 
-                this.stack = null;
+                _stack = null;
             }
 
             /// <summary>
@@ -730,19 +731,19 @@ namespace System.Collections.Immutable
             {
                 this.ThrowIfDisposed();
 
-                if (this.stack != null)
+                if (_stack != null)
                 {
-                    var stack = this.stack.Use(ref this);
+                    var stack = _stack.Use(ref this);
                     if (stack.Count > 0)
                     {
                         SortedInt32KeyNode<TValue> n = stack.Pop().Value;
-                        this.current = n;
+                        _current = n;
                         this.PushLeft(n.Right);
                         return true;
                     }
                 }
 
-                this.current = null;
+                _current = null;
                 return false;
             }
 
@@ -753,12 +754,12 @@ namespace System.Collections.Immutable
             {
                 this.ThrowIfDisposed();
 
-                this.current = null;
-                if (this.stack != null)
+                _current = null;
+                if (_stack != null)
                 {
-                    var stack = this.stack.Use(ref this);
+                    var stack = _stack.Use(ref this);
                     stack.ClearFastWhenEmpty();
-                    this.PushLeft(this.root);
+                    this.PushLeft(_root);
                 }
             }
 
@@ -773,7 +774,7 @@ namespace System.Collections.Immutable
                 // For enumerators of empty collections, there isn't any natural
                 // way to know when a copy of the struct has been disposed of.
 
-                if (this.root == null || (this.stack != null && !this.stack.IsOwned(ref this)))
+                if (_root == null || (_stack != null && !_stack.IsOwned(ref this)))
                 {
                     Validation.Requires.FailObjectDisposed(this);
                 }
@@ -786,7 +787,7 @@ namespace System.Collections.Immutable
             private void PushLeft(SortedInt32KeyNode<TValue> node)
             {
                 Requires.NotNull(node, "node");
-                var stack = this.stack.Use(ref this);
+                var stack = _stack.Use(ref this);
                 while (!node.IsEmpty)
                 {
                     stack.Push(new RefAsValueType<SortedInt32KeyNode<TValue>>(node));

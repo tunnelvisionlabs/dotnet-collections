@@ -1,4 +1,4 @@
-﻿#if !NET45PLUS
+#if !NET45PLUS
 
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
@@ -40,23 +40,23 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The binary tree used to store the contents of the list.  Contents are typically not entirely frozen.
             /// </summary>
-            private Node root = Node.EmptyNode;
+            private Node _root = Node.EmptyNode;
 
             /// <summary>
             /// Caches an immutable instance that represents the current state of the collection.
             /// </summary>
             /// <value>Null if no immutable view has been created for the current version.</value>
-            private ImmutableList<T> immutable;
+            private ImmutableList<T> _immutable;
 
             /// <summary>
             /// A number that increments every time the builder changes its contents.
             /// </summary>
-            private int version;
+            private int _version;
 
             /// <summary>
             /// The object callers may use to synchronize access to this collection.
             /// </summary>
-            private object syncRoot;
+            private object _syncRoot;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder"/> class.
@@ -65,8 +65,8 @@ namespace System.Collections.Immutable
             internal Builder(ImmutableList<T> list)
             {
                 Requires.NotNull(list, "list");
-                this.root = list.root;
-                this.immutable = list;
+                _root = list._root;
+                _immutable = list;
             }
 
             #region IList<T> Properties
@@ -95,7 +95,7 @@ namespace System.Collections.Immutable
             /// </summary>
             internal int Version
             {
-                get { return this.version; }
+                get { return _version; }
             }
 
             /// <summary>
@@ -105,7 +105,7 @@ namespace System.Collections.Immutable
             {
                 get
                 {
-                    return this.root;
+                    return _root;
                 }
 
                 private set
@@ -113,14 +113,14 @@ namespace System.Collections.Immutable
                     // We *always* increment the version number because some mutations
                     // may not create a new value of root, although the existing root
                     // instance may have mutated.
-                    this.version++;
+                    _version++;
 
-                    if (this.root != value)
+                    if (_root != value)
                     {
-                        this.root = value;
+                        _root = value;
 
                         // Clear any cached value for the immutable view since it is now invalidated.
-                        this.immutable = null;
+                        _immutable = null;
                     }
                 }
             }
@@ -288,7 +288,7 @@ namespace System.Collections.Immutable
             {
                 Requires.NotNull(array, "array");
                 Requires.Range(array.Length >= this.Count, "array");
-                this.root.CopyTo(array);
+                _root.CopyTo(array);
             }
 
             /// <summary>
@@ -307,7 +307,7 @@ namespace System.Collections.Immutable
             {
                 Requires.NotNull(array, "array");
                 Requires.Range(array.Length >= arrayIndex + this.Count, "arrayIndex");
-                this.root.CopyTo(array, arrayIndex);
+                _root.CopyTo(array, arrayIndex);
             }
 
             /// <summary>
@@ -328,7 +328,7 @@ namespace System.Collections.Immutable
             /// <param name="count">The number of elements to copy.</param>
             public void CopyTo(int index, T[] array, int arrayIndex, int count)
             {
-                this.root.CopyTo(index, array, arrayIndex, count);
+                _root.CopyTo(index, array, arrayIndex, count);
             }
 
             /// <summary>
@@ -370,7 +370,7 @@ namespace System.Collections.Immutable
             public ImmutableList<TOutput> ConvertAll<TOutput>(Func<T, TOutput> converter)
             {
                 Requires.NotNull(converter, "converter");
-                return ImmutableList<TOutput>.WrapNode(this.root.ConvertAll(converter));
+                return ImmutableList<TOutput>.WrapNode(_root.ConvertAll(converter));
             }
 
             /// <summary>
@@ -389,7 +389,7 @@ namespace System.Collections.Immutable
             public bool Exists(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.Exists(match);
+                return _root.Exists(match);
             }
 
             /// <summary>
@@ -407,7 +407,7 @@ namespace System.Collections.Immutable
             public T Find(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.Find(match);
+                return _root.Find(match);
             }
 
             /// <summary>
@@ -426,7 +426,7 @@ namespace System.Collections.Immutable
             public ImmutableList<T> FindAll(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.FindAll(match);
+                return _root.FindAll(match);
             }
 
             /// <summary>
@@ -445,7 +445,7 @@ namespace System.Collections.Immutable
             public int FindIndex(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.FindIndex(match);
+                return _root.FindIndex(match);
             }
 
             /// <summary>
@@ -465,7 +465,7 @@ namespace System.Collections.Immutable
                 Requires.NotNull(match, "match");
                 Requires.Range(startIndex >= 0, "startIndex");
                 Requires.Range(startIndex <= this.Count, "startIndex");
-                return this.root.FindIndex(startIndex, match);
+                return _root.FindIndex(startIndex, match);
             }
 
             /// <summary>
@@ -488,7 +488,7 @@ namespace System.Collections.Immutable
                 Requires.Range(count >= 0, "count");
                 Requires.Range(startIndex + count <= this.Count, "count");
 
-                return this.root.FindIndex(startIndex, count, match);
+                return _root.FindIndex(startIndex, count, match);
             }
 
             /// <summary>
@@ -506,7 +506,7 @@ namespace System.Collections.Immutable
             public T FindLast(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.FindLast(match);
+                return _root.FindLast(match);
             }
 
             /// <summary>
@@ -525,7 +525,7 @@ namespace System.Collections.Immutable
             public int FindLastIndex(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.FindLastIndex(match);
+                return _root.FindLastIndex(match);
             }
 
             /// <summary>
@@ -546,7 +546,7 @@ namespace System.Collections.Immutable
                 Requires.NotNull(match, "match");
                 Requires.Range(startIndex >= 0, "startIndex");
                 Requires.Range(startIndex == 0 || startIndex < this.Count, "startIndex");
-                return this.root.FindLastIndex(startIndex, match);
+                return _root.FindLastIndex(startIndex, match);
             }
 
             /// <summary>
@@ -572,7 +572,7 @@ namespace System.Collections.Immutable
                 Requires.Range(count <= this.Count, "count");
                 Requires.Range(startIndex - count + 1 >= 0, "startIndex");
 
-                return this.root.FindLastIndex(startIndex, count, match);
+                return _root.FindLastIndex(startIndex, count, match);
             }
 
             /// <summary>
@@ -596,7 +596,7 @@ namespace System.Collections.Immutable
             [Pure]
             public int IndexOf(T item, int index)
             {
-                return this.root.IndexOf(item, index, this.Count - index, EqualityComparer<T>.Default);
+                return _root.IndexOf(item, index, this.Count - index, EqualityComparer<T>.Default);
             }
 
             /// <summary>
@@ -623,7 +623,7 @@ namespace System.Collections.Immutable
             [Pure]
             public int IndexOf(T item, int index, int count)
             {
-                return this.root.IndexOf(item, index, count, EqualityComparer<T>.Default);
+                return _root.IndexOf(item, index, count, EqualityComparer<T>.Default);
             }
 
             /// <summary>
@@ -653,7 +653,7 @@ namespace System.Collections.Immutable
             {
                 Requires.NotNull(equalityComparer, "equalityComparer");
 
-                return this.root.IndexOf(item, index, count, equalityComparer);
+                return _root.IndexOf(item, index, count, equalityComparer);
             }
 
             /// <summary>
@@ -679,7 +679,7 @@ namespace System.Collections.Immutable
                     return -1;
                 }
 
-                return this.root.LastIndexOf(item, this.Count - 1, this.Count, EqualityComparer<T>.Default);
+                return _root.LastIndexOf(item, this.Count - 1, this.Count, EqualityComparer<T>.Default);
             }
 
             /// <summary>
@@ -706,7 +706,7 @@ namespace System.Collections.Immutable
                     return -1;
                 }
 
-                return this.root.LastIndexOf(item, startIndex, startIndex + 1, EqualityComparer<T>.Default);
+                return _root.LastIndexOf(item, startIndex, startIndex + 1, EqualityComparer<T>.Default);
             }
 
             /// <summary>
@@ -729,7 +729,7 @@ namespace System.Collections.Immutable
             [Pure]
             public int LastIndexOf(T item, int startIndex, int count)
             {
-                return this.root.LastIndexOf(item, startIndex, count, EqualityComparer<T>.Default);
+                return _root.LastIndexOf(item, startIndex, count, EqualityComparer<T>.Default);
             }
 
             /// <summary>
@@ -753,7 +753,7 @@ namespace System.Collections.Immutable
             [Pure]
             public int LastIndexOf(T item, int startIndex, int count, IEqualityComparer<T> equalityComparer)
             {
-                return this.root.LastIndexOf(item, startIndex, count, equalityComparer);
+                return _root.LastIndexOf(item, startIndex, count, equalityComparer);
             }
 
             /// <summary>
@@ -772,7 +772,7 @@ namespace System.Collections.Immutable
             public bool TrueForAll(Predicate<T> match)
             {
                 Requires.NotNull(match, "match");
-                return this.root.TrueForAll(match);
+                return _root.TrueForAll(match);
             }
 
             #endregion
@@ -1008,12 +1008,12 @@ namespace System.Collections.Immutable
                 // Creating an instance of ImmutableList<T> with our root node automatically freezes our tree,
                 // ensuring that the returned instance is immutable.  Any further mutations made to this builder
                 // will clone (and unfreeze) the spine of modified nodes until the next time this method is invoked.
-                if (this.immutable == null)
+                if (_immutable == null)
                 {
-                    this.immutable = ImmutableList<T>.WrapNode(this.Root);
+                    _immutable = ImmutableList<T>.WrapNode(this.Root);
                 }
 
-                return this.immutable;
+                return _immutable;
             }
 
             #endregion
@@ -1162,12 +1162,12 @@ namespace System.Collections.Immutable
             {
                 get
                 {
-                    if (this.syncRoot == null)
+                    if (_syncRoot == null)
                     {
-                        System.Threading.Interlocked.CompareExchange<Object>(ref this.syncRoot, new Object(), null);
+                        System.Threading.Interlocked.CompareExchange<Object>(ref _syncRoot, new Object(), null);
                     }
 
-                    return this.syncRoot;
+                    return _syncRoot;
                 }
             }
             #endregion
@@ -1183,13 +1183,13 @@ namespace System.Collections.Immutable
         /// <summary>
         /// The collection to be enumerated.
         /// </summary>
-        private readonly ImmutableList<T>.Builder list;
+        private readonly ImmutableList<T>.Builder _list;
 
         /// <summary>
         /// The simple view of the collection.
         /// </summary>
-        private T[] cachedContents;
-      
+        private T[] _cachedContents;
+
         /// <summary>   
         /// Initializes a new instance of the <see cref="ImmutableListBuilderDebuggerProxy&lt;T&gt;"/> class.
         /// </summary>
@@ -1197,7 +1197,7 @@ namespace System.Collections.Immutable
         public ImmutableListBuilderDebuggerProxy(ImmutableList<T>.Builder builder)
         {
             Requires.NotNull(builder, "builder");
-            this.list = builder;
+            _list = builder;
         }
 
         /// <summary>
@@ -1208,12 +1208,12 @@ namespace System.Collections.Immutable
         {
             get
             {
-                if (this.cachedContents == null)
+                if (_cachedContents == null)
                 {
-                    this.cachedContents = this.list.ToArray(this.list.Count);
+                    _cachedContents = _list.ToArray(_list.Count);
                 }
 
-                return this.cachedContents;
+                return _cachedContents;
             }
         }
     }

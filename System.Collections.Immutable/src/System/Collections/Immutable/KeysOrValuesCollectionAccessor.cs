@@ -20,12 +20,12 @@ namespace System.Collections.Immutable
         /// <summary>
         /// The underlying wrapped dictionary.
         /// </summary>
-        private readonly IImmutableDictionary<TKey, TValue> dictionary;
+        private readonly IImmutableDictionary<TKey, TValue> _dictionary;
 
         /// <summary>
         /// The key or value enumerable that this instance wraps.
         /// </summary>
-        private readonly IEnumerable<T> keysOrValues;
+        private readonly IEnumerable<T> _keysOrValues;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeysOrValuesCollectionAccessor{TKey, TValue, T}"/> class.
@@ -37,8 +37,8 @@ namespace System.Collections.Immutable
             Requires.NotNull(dictionary, "dictionary");
             Requires.NotNull(keysOrValues, "keysOrValues");
 
-            this.dictionary = dictionary;
-            this.keysOrValues = keysOrValues;
+            _dictionary = dictionary;
+            _keysOrValues = keysOrValues;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace System.Collections.Immutable
         /// <returns>The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</returns>
         public int Count
         {
-            get { return this.dictionary.Count; }
+            get { return _dictionary.Count; }
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace System.Collections.Immutable
         /// </summary>
         protected IImmutableDictionary<TKey, TValue> Dictionary
         {
-            get { return this.dictionary; }
+            get { return _dictionary; }
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace System.Collections.Immutable
         /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
-            return this.keysOrValues.GetEnumerator();
+            return _keysOrValues.GetEnumerator();
         }
 
         /// <summary>
@@ -137,16 +137,9 @@ namespace System.Collections.Immutable
             Requires.Range(arrayIndex >= 0, "arrayIndex");
             Requires.Range(array.Length >= arrayIndex + this.Count, "arrayIndex");
 
-            if (this.Count == 0)
-            {
-                return;
-            }
-
-            int[] indices = new int[1]; // SetValue takes a params array; lifting out the implicit allocation from the loop
             foreach (T item in this)
             {
-                indices[0] = arrayIndex++;
-                array.SetValue(item, indices);
+                array.SetValue(item, arrayIndex++);
             }
         }
 

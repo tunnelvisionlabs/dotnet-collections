@@ -31,12 +31,12 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The equality comparer to use for the key.
             /// </summary>
-            private readonly IEqualityComparer<TKey> keyComparer;
+            private readonly IEqualityComparer<TKey> _keyComparer;
 
             /// <summary>
             /// The value comparer.
             /// </summary>
-            private readonly IEqualityComparer<TValue> valueComparer;
+            private readonly IEqualityComparer<TValue> _valueComparer;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Comparers"/> class.
@@ -48,8 +48,8 @@ namespace System.Collections.Immutable
                 Requires.NotNull(keyComparer, "keyComparer");
                 Requires.NotNull(valueComparer, "valueComparer");
 
-                this.keyComparer = keyComparer;
-                this.valueComparer = valueComparer;
+                _keyComparer = keyComparer;
+                _valueComparer = valueComparer;
             }
 
             /// <summary>
@@ -60,7 +60,7 @@ namespace System.Collections.Immutable
             /// </value>
             internal IEqualityComparer<TKey> KeyComparer
             {
-                get { return this.keyComparer; }
+                get { return _keyComparer; }
             }
 
             /// <summary>
@@ -82,7 +82,7 @@ namespace System.Collections.Immutable
             /// </value>
             internal IEqualityComparer<TValue> ValueComparer
             {
-                get { return this.valueComparer; }
+                get { return _valueComparer; }
             }
 
             /// <summary>
@@ -130,7 +130,7 @@ namespace System.Collections.Immutable
             /// </returns>
             bool IEqualityComparer<KeyValuePair<TKey, TValue>>.Equals(KeyValuePair<TKey, TValue> x, KeyValuePair<TKey, TValue> y)
             {
-                return this.keyComparer.Equals(x.Key, y.Key);
+                return _keyComparer.Equals(x.Key, y.Key);
             }
 
             /// <summary>
@@ -142,7 +142,7 @@ namespace System.Collections.Immutable
             /// </returns>
             int IEqualityComparer<KeyValuePair<TKey, TValue>>.GetHashCode(KeyValuePair<TKey, TValue> obj)
             {
-                return this.keyComparer.GetHashCode(obj.Key);
+                return _keyComparer.GetHashCode(obj.Key);
             }
 
             /// <summary>
@@ -171,7 +171,7 @@ namespace System.Collections.Immutable
             {
                 Requires.NotNull(valueComparer, "valueComparer");
 
-                return this.valueComparer == valueComparer
+                return _valueComparer == valueComparer
                     ? this
                     : Get(this.KeyComparer, valueComparer);
             }

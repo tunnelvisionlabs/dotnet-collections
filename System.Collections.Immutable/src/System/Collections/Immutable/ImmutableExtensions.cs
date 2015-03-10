@@ -288,38 +288,6 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// Gets a non-disposable enumerable that can be used as the source for a C# foreach loop
-        /// that will not box the enumerator if it is of a particular type.
-        /// </summary>
-        /// <typeparam name="T">The type of value to be enumerated.</typeparam>
-        /// <typeparam name="TEnumerator">
-        /// The type of the Enumerator struct. This must NOT implement <see cref="IDisposable"/> (or <see cref="IEnumerator{T}"/>).
-        /// If it does, call <see cref="GetEnumerableDisposable{T, TEnumerator}"/> instead.
-        /// </typeparam>
-        /// <param name="enumerable">The collection to be enumerated.</param>
-        /// <returns>A struct that enumerates the collection.</returns>
-        internal static EnumeratorAdapter<T, TEnumerator> GetEnumerable<T, TEnumerator>(this IEnumerable<T> enumerable)
-            where TEnumerator : struct, IStrongEnumerator<T>
-        {
-            Requires.NotNull(enumerable, "enumerable");
-
-            // This debug-only check is sufficient to cause test failures to flag errors so they never get checked in.
-            Debug.Assert(!typeof(IDisposable).GetTypeInfo().IsAssignableFrom(typeof(TEnumerator).GetTypeInfo()), "The enumerator struct implements IDisposable. Call GetEnumerableDisposable instead.");
-
-            var strongEnumerable = enumerable as IStrongEnumerable<T, TEnumerator>;
-            if (strongEnumerable != null)
-            {
-                return new EnumeratorAdapter<T, TEnumerator>(strongEnumerable.GetEnumerator());
-            }
-            else
-            {
-                // Consider for future: we could add more special cases for common
-                // mutable collection types like List<T>+Enumerator and such.
-                return new EnumeratorAdapter<T, TEnumerator>(enumerable.GetEnumerator());
-            }
-        }
-
-        /// <summary>
         /// Gets a disposable enumerable that can be used as the source for a C# foreach loop
         /// that will not box the enumerator if it is of a particular type.
         /// </summary>
@@ -354,7 +322,7 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The list being exposed.
             /// </summary>
-            private readonly IList<T> collection;
+            private readonly IList<T> _collection;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ListOfTWrapper&lt;T&gt;"/> class.
@@ -363,7 +331,7 @@ namespace System.Collections.Immutable
             internal ListOfTWrapper(IList<T> collection)
             {
                 Requires.NotNull(collection, "collection");
-                this.collection = collection;
+                _collection = collection;
             }
 
             /// <summary>
@@ -371,7 +339,7 @@ namespace System.Collections.Immutable
             /// </summary>
             public int Count
             {
-                get { return this.collection.Count; }
+                get { return _collection.Count; }
             }
 
             /// <summary>
@@ -379,7 +347,7 @@ namespace System.Collections.Immutable
             /// </summary>
             public T this[int index]
             {
-                get { return this.collection[index]; }
+                get { return _collection[index]; }
             }
 
             /// <summary>
@@ -390,7 +358,7 @@ namespace System.Collections.Immutable
             /// </returns>
             public IEnumerator<T> GetEnumerator()
             {
-                return this.collection.GetEnumerator();
+                return _collection.GetEnumerator();
             }
 
             /// <summary>
@@ -414,12 +382,12 @@ namespace System.Collections.Immutable
             /// <summary>
             /// The original sequence.
             /// </summary>
-            private readonly IEnumerable<T> sequence;
+            private readonly IEnumerable<T> _sequence;
 
             /// <summary>
             /// The list-ified sequence.
             /// </summary>
-            private IList<T> collection;
+            private IList<T> _collection;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="FallbackWrapper&lt;T&gt;"/> class.
@@ -428,7 +396,7 @@ namespace System.Collections.Immutable
             internal FallbackWrapper(IEnumerable<T> sequence)
             {
                 Requires.NotNull(sequence, "sequence");
-                this.sequence = sequence;
+                _sequence = sequence;
             }
 
             /// <summary>
@@ -438,18 +406,18 @@ namespace System.Collections.Immutable
             {
                 get
                 {
-                    if (this.collection == null)
+                    if (_collection == null)
                     {
                         int count;
-                        if (this.sequence.TryGetCount(out count))
+                        if (_sequence.TryGetCount(out count))
                         {
                             return count;
                         }
 
-                        this.collection = this.sequence.ToArray();
+                        _collection = _sequence.ToArray();
                     }
 
-                    return this.collection.Count;
+                    return _collection.Count;
                 }
             }
 
@@ -460,12 +428,12 @@ namespace System.Collections.Immutable
             {
                 get
                 {
-                    if (this.collection == null)
+                    if (_collection == null)
                     {
-                        this.collection = this.sequence.ToArray();
+                        _collection = _sequence.ToArray();
                     }
 
-                    return this.collection[index];
+                    return _collection[index];
                 }
             }
 
@@ -477,7 +445,7 @@ namespace System.Collections.Immutable
             /// </returns>
             public IEnumerator<T> GetEnumerator()
             {
-                return this.sequence.GetEnumerator();
+                return _sequence.GetEnumerator();
             }
 
             /// <summary>
