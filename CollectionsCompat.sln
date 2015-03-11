@@ -5,11 +5,8 @@ VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40FD9067-4B1C-49B3-BD4C-51ECEF2811C4}"
 	ProjectSection(SolutionItems) = preProject
-		build\build.ps1 = build\build.ps1
-		build\check-key.ps1 = build\check-key.ps1
-		build\keys.ps1 = build\keys.ps1
-		build\push.ps1 = build\push.ps1
-		build\version.ps1 = build\version.ps1
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -28,6 +25,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.portable-net45", "System.Collections.Immutable\src\System.Collections.Immutable.portable-net45.csproj", "{1DD0FF15-6234-4BD6-850A-317F05479554}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.portable-net45", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.portable-net45.csproj", "{95DFC527-4DC1-495E-97D7-E94EE1F7140D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FEAE5BC4-7447-4959-B35A-BA152534A466}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.ps1 = build\build.ps1
+		build\check-key.ps1 = build\check-key.ps1
+		build\keys.ps1 = build\keys.ps1
+		build\push.ps1 = build\push.ps1
+		build\version.ps1 = build\version.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
