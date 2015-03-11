@@ -1,0 +1,13 @@
+version: 1.0.{build}
+configuration: Debug
+init:
+- git config --global core.autocrlf true
+before_build:
+- nuget restore
+build:
+  verbosity: minimal
+test_script:
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\net35-client\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\net40-client\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\portable-net40\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\portable-net45\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
