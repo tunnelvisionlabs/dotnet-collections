@@ -1,8 +1,11 @@
 # Rackspace.Collections.Immutable
 
-This project is a complete port of the [System.Collections.Immutable][1] assembly to support .NET 3.5 and newer.
+[![Build status](https://ci.appveyor.com/api/projects/status/o6sy4k8aaif2tel8/branch/master?svg=true)][1]
 
-[1]: https://www.nuget.org/packages/System.Collections.Immutable
+This project is a complete port of the [System.Collections.Immutable][2] assembly to support .NET 3.5 and newer.
+
+[1]: https://ci.appveyor.com/project/sharwell/dotnet-collections/branch/master
+[2]: https://www.nuget.org/packages/System.Collections.Immutable
 
 ## Releases
 
