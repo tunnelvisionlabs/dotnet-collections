@@ -91,7 +91,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\System.Collections.Immutable.portable-net40.csproj">
       <Project>{418e9fc8-a042-4ee5-b20c-72f86a51aeed}</Project>
-      <Name>Rackspace.Collections.Immutable</Name>
+      <Name>System.Collections.Immutable.portable-net40</Name>
       <Aliases>global,rax</Aliases>
     </ProjectReference>
   </ItemGroup>
