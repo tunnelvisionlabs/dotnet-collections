@@ -9,4 +9,4 @@ build/nuget/
 # Per-user files created by IDEs
 *.suo
 *.user
-*.sln.ide/
+*.vs/
