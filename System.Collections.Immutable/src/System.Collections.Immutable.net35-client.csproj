@@ -45,8 +45,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' == 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.net35.snk</AssemblyOriginatorKeyFile>
-    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' != 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.net35.dev.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' == 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' != 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.dev.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -147,11 +147,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.net35.dev.snk">
-      <Link>Rackspace.Collections.Immutable.net35.dev.snk</Link>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.dev.snk">
+      <Link>Rackspace.Collections.Immutable.dev.snk</Link>
     </None>
-    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.net35.snk">
-      <Link>Rackspace.Collections.Immutable.net35.snk</Link>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.snk">
+      <Link>Rackspace.Collections.Immutable.snk</Link>
     </None>
     <None Include="Interfaces.cd" />
     <None Include="packages.System.Collections.Immutable.net35-client.config" />
