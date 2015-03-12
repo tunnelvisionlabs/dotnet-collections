@@ -59,7 +59,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Delegate | AttributeTargets.Class | AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
-    public sealed class PureAttribute : Attribute
+    internal sealed class PureAttribute : Attribute
     {
     }
 
@@ -69,7 +69,7 @@ namespace System.Diagnostics.Contracts {
     [Conditional("CONTRACTS_FULL")]
     [Conditional("DEBUG")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Delegate, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractClassAttribute : Attribute
+    internal sealed class ContractClassAttribute : Attribute
     {
         private Type _typeWithContracts;
 
@@ -88,7 +88,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractClassForAttribute : Attribute
+    internal sealed class ContractClassForAttribute : Attribute
     {
         private Type _typeIAmAContractFor;
 
@@ -112,7 +112,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public sealed class ContractInvariantMethodAttribute : Attribute
+    internal sealed class ContractInvariantMethodAttribute : Attribute
     {
     }
 
@@ -120,7 +120,7 @@ namespace System.Diagnostics.Contracts {
     /// Attribute that specifies that an assembly is a reference assembly with contracts.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)]
-    public sealed class ContractReferenceAssemblyAttribute : Attribute
+    internal sealed class ContractReferenceAssemblyAttribute : Attribute
     {
     }
 
@@ -129,7 +129,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public sealed class ContractRuntimeIgnoredAttribute : Attribute
+    internal sealed class ContractRuntimeIgnoredAttribute : Attribute
     {
     }
 
@@ -179,7 +179,7 @@ namespace System.Diagnostics.Contracts {
     /// </remarks>
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
-    public sealed class ContractVerificationAttribute : Attribute
+    internal sealed class ContractVerificationAttribute : Attribute
     {
         private bool _value;
 
@@ -197,7 +197,7 @@ namespace System.Diagnostics.Contracts {
     [Conditional("CONTRACTS_FULL")]
     [AttributeUsage(AttributeTargets.Field)]
     [SuppressMessage("Microsoft.Design", "CA1019:DefineAccessorsForAttributeArguments", Justification = "Thank you very much, but we like the names we've defined for the accessors")]
-    public sealed class ContractPublicPropertyNameAttribute : Attribute
+    internal sealed class ContractPublicPropertyNameAttribute : Attribute
     {
         private String _publicName;
 
@@ -217,7 +217,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [Conditional("CONTRACTS_FULL")]
-    public sealed class ContractArgumentValidatorAttribute : Attribute
+    internal sealed class ContractArgumentValidatorAttribute : Attribute
     {
     }
 
@@ -226,7 +226,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [Conditional("CONTRACTS_FULL")]
-    public sealed class ContractAbbreviatorAttribute : Attribute
+    internal sealed class ContractAbbreviatorAttribute : Attribute
     {
     }
 
@@ -235,7 +235,7 @@ namespace System.Diagnostics.Contracts {
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
     [Conditional("CONTRACTS_FULL")]
-    public sealed class ContractOptionAttribute : Attribute
+    internal sealed class ContractOptionAttribute : Attribute
     {
         private String _category;
         private String _setting;
@@ -285,7 +285,7 @@ namespace System.Diagnostics.Contracts {
     /// symbol CONTRACTS_PRECONDITIONS will include all preconditions expressed using Contract.Requires in your 
     /// build.  The symbol CONTRACTS_FULL will include postconditions and object invariants, and requires the binary rewriter.
     /// </remarks>
-    public static partial class Contract
+    internal static partial class Contract
     {
         #region User Methods
 
@@ -905,7 +905,7 @@ namespace System.Diagnostics.Contracts {
         #endregion
     }
 
-    public enum ContractFailureKind {
+    internal enum ContractFailureKind {
         Precondition,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Postcondition")]
         Postcondition,
@@ -926,7 +926,7 @@ namespace System.Diagnostics.Contracts {
 namespace System.Diagnostics.Contracts.Internal
 {
     [Obsolete("Use the ContractHelper class in the System.Runtime.CompilerServices namespace instead.")]
-    public static class ContractHelper
+    internal static class ContractHelper
     {
         #region Rewriter Failure Hooks
 
@@ -965,7 +965,7 @@ namespace System.Diagnostics.Contracts.Internal
 
 namespace System.Runtime.CompilerServices
 {
-    public static partial class ContractHelper
+    internal static partial class ContractHelper
     {
         #region Rewriter Failure Hooks
 
