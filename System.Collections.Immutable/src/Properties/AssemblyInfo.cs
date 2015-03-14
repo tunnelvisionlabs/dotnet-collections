@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyVersion("1.1.0.0")]
 [assembly: AssemblyFileVersion("1.1.34.0")]
-[assembly: AssemblyInformationalVersion("1.1.34-dev")]
+[assembly: AssemblyInformationalVersion("1.1.34-rc")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
