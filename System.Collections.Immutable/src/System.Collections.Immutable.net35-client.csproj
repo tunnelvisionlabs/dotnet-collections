@@ -153,7 +153,6 @@
     <None Include="..\..\build\keys\Rackspace.Collections.Immutable.snk">
       <Link>Rackspace.Collections.Immutable.snk</Link>
     </None>
-    <None Include="Interfaces.cd" />
     <None Include="packages.System.Collections.Immutable.net35-client.config" />
     <None Include="Rackspace.Collections.Immutable.nuspec" />
   </ItemGroup>

@@ -86,7 +86,6 @@
     <None Include="..\..\build\keys\UnitTestingKey.snk">
       <Link>UnitTestingKey.snk</Link>
     </None>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.System.Collections.Immutable.Tests.portable-net40.config" />
   </ItemGroup>
   <ItemGroup>

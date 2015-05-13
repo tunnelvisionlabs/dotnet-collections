@@ -151,7 +151,6 @@
     <None Include="..\..\build\keys\Rackspace.Collections.Immutable.snk">
       <Link>Rackspace.Collections.Immutable.snk</Link>
     </None>
-    <None Include="Interfaces.cd" />
     <None Include="packages.System.Collections.Immutable.portable-net40.config" />
     <None Include="Rackspace.Collections.Immutable.nuspec" />
   </ItemGroup>
