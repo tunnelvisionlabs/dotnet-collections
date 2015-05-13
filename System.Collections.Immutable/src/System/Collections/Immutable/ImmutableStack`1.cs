@@ -49,7 +49,7 @@ namespace System.Collections.Immutable
         private readonly ImmutableStack<T> _tail;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImmutableStack&lt;T&gt;"/> class
+        /// Initializes a new instance of the <see cref="ImmutableStack{T}"/> class
         /// that acts as the empty stack.
         /// </summary>
         private ImmutableStack()
@@ -57,7 +57,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImmutableStack&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="ImmutableStack{T}"/> class.
         /// </summary>
         /// <param name="head">The head element on the stack.</param>
         /// <param name="tail">The rest of the elements on the stack.</param>
@@ -201,7 +201,7 @@ namespace System.Collections.Immutable
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Enumerator"/> that can be used to iterate through the collection.
+        /// An <see cref="Enumerator"/> that can be used to iterate through the collection.
         /// </returns>
         [Pure]
         public Enumerator GetEnumerator()
@@ -213,7 +213,7 @@ namespace System.Collections.Immutable
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
         /// </returns>
         [Pure]
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
@@ -225,7 +225,7 @@ namespace System.Collections.Immutable
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+        /// An <see cref="IEnumerator"/> object that can be used to iterate through the collection.
         /// </returns>
         [Pure]
         IEnumerator IEnumerable.GetEnumerator()
@@ -429,7 +429,6 @@ namespace System.Collections.Immutable
     /// <summary>
     /// A simple view of the immutable collection that the debugger can show to the developer.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     internal class ImmutableStackDebuggerProxy<T>
     {
         /// <summary>
@@ -443,7 +442,7 @@ namespace System.Collections.Immutable
         private T[] _contents;
 
         /// <summary>   
-        /// Initializes a new instance of the <see cref="ImmutableStackDebuggerProxy&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="ImmutableStackDebuggerProxy{T}"/> class.
         /// </summary>
         /// <param name="stack">The collection to display in the debugger</param>
         public ImmutableStackDebuggerProxy(ImmutableStack<T> stack)

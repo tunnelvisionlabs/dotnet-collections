@@ -11,7 +11,7 @@ using Validation;
 namespace System.Collections.Immutable
 {
     /// <content>
-    /// Contains the inner Builder class.
+    /// Contains the inner <see cref="ImmutableHashSet{T}.Builder"/> class.
     /// </content>
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public sealed partial class ImmutableHashSet<T>
@@ -22,7 +22,7 @@ namespace System.Collections.Immutable
         /// </summary>
         /// <remarks>
         /// <para>
-        /// While <see cref="ImmutableHashSet&lt;T&gt;.Union(IEnumerable&lt;T&gt;)"/> and other bulk change methods
+        /// While <see cref="ImmutableHashSet{T}.Union(IEnumerable{T})"/> and other bulk change methods
         /// already provide fast bulk change operations on the collection, this class allows
         /// multiple combinations of changes to be made to a set with equal efficiency.
         /// </para>
@@ -62,7 +62,7 @@ namespace System.Collections.Immutable
             private int _version;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;.Builder"/> class.
+            /// Initializes a new instance of the <see cref="ImmutableHashSet{T}.Builder"/> class.
             /// </summary>
             /// <param name="set">The set.</param>
             internal Builder(ImmutableHashSet<T> set)
@@ -77,18 +77,18 @@ namespace System.Collections.Immutable
             #region ISet<T> Properties
 
             /// <summary>
-            /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// Gets the number of elements contained in the <see cref="ICollection{T}"/>.
             /// </summary>
-            /// <returns>The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</returns>
+            /// <returns>The number of elements contained in the <see cref="ICollection{T}"/>.</returns>
             public int Count
             {
                 get { return _count; }
             }
 
             /// <summary>
-            /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            /// Gets a value indicating whether the <see cref="ICollection{T}"/> is read-only.
             /// </summary>
-            /// <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.</returns>
+            /// <returns>true if the <see cref="ICollection{T}"/> is read-only; otherwise, false.</returns>
             bool ICollection<T>.IsReadOnly
             {
                 get { return false; }
@@ -174,7 +174,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
             /// </returns>
             public Enumerator GetEnumerator()
             {
@@ -219,13 +219,13 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// Removes the first occurrence of a specific object from the <see cref="ICollection{T}"/>.
             /// </summary>
-            /// <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            /// <param name="item">The object to remove from the <see cref="ICollection{T}"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// true if <paramref name="item"/> was successfully removed from the <see cref="ICollection{T}"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="ICollection{T}"/>.
             /// </returns>
-            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+            /// <exception cref="NotSupportedException">The <see cref="ICollection{T}"/> is read-only.</exception>
             public bool Remove(T item)
             {
                 var result = ImmutableHashSet<T>.Remove(item, this.Origin);
@@ -234,11 +234,11 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            /// Determines whether the <see cref="ICollection{T}"/> contains a specific value.
             /// </summary>
-            /// <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            /// <param name="item">The object to locate in the <see cref="ICollection{T}"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            /// true if <paramref name="item"/> is found in the <see cref="ICollection{T}"/>; otherwise, false.
             /// </returns>
             public bool Contains(T item)
             {
@@ -246,9 +246,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// Removes all items from the <see cref="ICollection{T}"/>.
             /// </summary>
-            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only. </exception>
+            /// <exception cref="NotSupportedException">The <see cref="ICollection{T}"/> is read-only. </exception>
             public void Clear()
             {
                 _count = 0;
@@ -365,17 +365,17 @@ namespace System.Collections.Immutable
             #region ICollection<T> Members
 
             /// <summary>
-            /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            /// Adds an item to the <see cref="ICollection{T}"/>.
             /// </summary>
-            /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
-            /// <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.</exception>
+            /// <param name="item">The object to add to the <see cref="ICollection{T}"/>.</param>
+            /// <exception cref="NotSupportedException">The <see cref="ICollection{T}"/> is read-only.</exception>
             void ICollection<T>.Add(T item)
             {
                 this.Add(item);
             }
 
             /// <summary>
-            /// See the <see cref="ICollection&lt;T&gt;"/> interface.
+            /// See the <see cref="ICollection{T}"/> interface.
             /// </summary>
             void ICollection<T>.CopyTo(T[] array, int arrayIndex)
             {
@@ -397,7 +397,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
             /// </returns>
             IEnumerator<T> IEnumerable<T>.GetEnumerator()
             {
@@ -408,7 +408,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
             /// <returns>
-            /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            /// An <see cref="IEnumerator"/> object that can be used to iterate through the collection.
             /// </returns>
             IEnumerator IEnumerable.GetEnumerator()
             {

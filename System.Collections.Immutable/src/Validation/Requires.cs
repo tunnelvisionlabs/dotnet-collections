@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 namespace Validation
 {
     /// <summary>
-    /// Common runtime checks that throw ArgumentExceptions upon failure.
+    /// Common runtime checks that throw <see cref="ArgumentException"/> upon failure.
     /// </summary>
     internal static class Requires
     {
@@ -108,7 +108,7 @@ namespace Validation
         }
 
         /// <summary>
-        /// Throws an ArgumentException if a condition does not evaluate to true.
+        /// Throws an <see cref="ArgumentException"/> if a condition does not evaluate to true.
         /// </summary>
         [DebuggerStepThrough]
         public static void Argument(bool condition, string parameterName, string message)
@@ -120,7 +120,7 @@ namespace Validation
         }
 
         /// <summary>
-        /// Throws an ArgumentException if a condition does not evaluate to true.
+        /// Throws an <see cref="ArgumentException"/> if a condition does not evaluate to true.
         /// </summary>
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
         [DebuggerStepThrough]
@@ -133,7 +133,7 @@ namespace Validation
         }
 
         /// <summary>
-        /// Throws an ObjectDisposedException for a disposed object.
+        /// Throws an <see cref="ObjectDisposedException"/> for a disposed object.
         /// </summary>
         /// <typeparam name="TDisposed">Specifies the type of the disposed object.</typeparam>
         /// <param name="disposed">The disposed object.</param>

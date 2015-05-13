@@ -54,7 +54,7 @@ namespace System.Collections.Immutable
         private readonly SortedInt32KeyNode<HashBucket> _root;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="ImmutableHashSet{T}"/> class.
         /// </summary>
         /// <param name="equalityComparer">The equality comparer.</param>
         internal ImmutableHashSet(IEqualityComparer<T> equalityComparer)
@@ -63,7 +63,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="ImmutableHashSet{T}"/> class.
         /// </summary>
         /// <param name="root">The sorted set that this set wraps.</param>
         /// <param name="equalityComparer">The equality comparer used by this instance.</param>
@@ -80,7 +80,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public ImmutableHashSet<T> Clear()
         {
@@ -90,7 +90,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public int Count
         {
@@ -98,7 +98,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public bool IsEmpty
         {
@@ -108,7 +108,7 @@ namespace System.Collections.Immutable
         #region IHashKeyCollection<T> Properties
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public IEqualityComparer<T> KeyComparer
         {
@@ -120,7 +120,7 @@ namespace System.Collections.Immutable
         #region IImmutableSet<T> Properties
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Clear()
@@ -133,7 +133,7 @@ namespace System.Collections.Immutable
         #region ICollection Properties
 
         /// <summary>
-        /// See ICollection.
+        /// See <see cref="ICollection"/>.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         object ICollection.SyncRoot
@@ -142,7 +142,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the ICollection interface.
+        /// See the <see cref="ICollection"/> interface.
         /// </summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         bool ICollection.IsSynchronized
@@ -193,7 +193,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [Pure]
         public ImmutableHashSet<T> Add(T item)
@@ -206,7 +206,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public ImmutableHashSet<T> Remove(T item)
         {
@@ -246,7 +246,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [Pure]
         public ImmutableHashSet<T> Union(IEnumerable<T> other)
@@ -258,7 +258,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [Pure]
         public ImmutableHashSet<T> Intersect(IEnumerable<T> other)
@@ -271,7 +271,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public ImmutableHashSet<T> Except(IEnumerable<T> other)
         {
@@ -318,7 +318,7 @@ namespace System.Collections.Immutable
         /// Determines whether the current set is a property (strict) subset of a specified collection.
         /// </summary>
         /// <param name="other">The collection to compare to the current set.</param>
-        /// <returns>true if the current set is a correct subset of other; otherwise, false.</returns>
+        /// <returns>true if the current set is a correct subset of <paramref name="other"/>; otherwise, false.</returns>
         [Pure]
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
@@ -331,7 +331,7 @@ namespace System.Collections.Immutable
         /// Determines whether the current set is a correct superset of a specified collection.
         /// </summary>
         /// <param name="other">The collection to compare to the current set.</param>
-        /// <returns>true if the current set is a correct superset of other; otherwise, false.</returns>
+        /// <returns>true if the current set is a correct superset of <paramref name="other"/>; otherwise, false.</returns>
         [Pure]
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
@@ -344,7 +344,7 @@ namespace System.Collections.Immutable
         /// Determines whether a set is a subset of a specified collection.
         /// </summary>
         /// <param name="other">The collection to compare to the current set.</param>
-        /// <returns>true if the current set is a subset of other; otherwise, false.</returns>
+        /// <returns>true if the current set is a subset of <paramref name="other"/>; otherwise, false.</returns>
         [Pure]
         public bool IsSubsetOf(IEnumerable<T> other)
         {
@@ -357,7 +357,7 @@ namespace System.Collections.Immutable
         /// Determines whether the current set is a superset of a specified collection.
         /// </summary>
         /// <param name="other">The collection to compare to the current set.</param>
-        /// <returns>true if the current set is a superset of other; otherwise, false.</returns>
+        /// <returns>true if the current set is a superset of <paramref name="other"/>; otherwise, false.</returns>
         [Pure]
         public bool IsSupersetOf(IEnumerable<T> other)
         {
@@ -370,7 +370,7 @@ namespace System.Collections.Immutable
         /// Determines whether the current set overlaps with the specified collection.
         /// </summary>
         /// <param name="other">The collection to compare to the current set.</param>
-        /// <returns>true if the current set and other share at least one common element; otherwise, false.</returns>
+        /// <returns>true if the current set and <paramref name="other"/> share at least one common element; otherwise, false.</returns>
         [Pure]
         public bool Overlaps(IEnumerable<T> other)
         {
@@ -384,7 +384,7 @@ namespace System.Collections.Immutable
         #region IImmutableSet<T> Methods
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Add(T item)
@@ -393,7 +393,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Remove(T item)
@@ -402,7 +402,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Union(IEnumerable<T> other)
@@ -411,7 +411,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Intersect(IEnumerable<T> other)
@@ -420,7 +420,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [ExcludeFromCodeCoverage]
         IImmutableSet<T> IImmutableSet<T>.Except(IEnumerable<T> other)
@@ -440,7 +440,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         public bool Contains(T item)
         {
@@ -449,7 +449,7 @@ namespace System.Collections.Immutable
         }
 
         /// <summary>
-        /// See the <see cref="IImmutableSet&lt;T&gt;"/> interface.
+        /// See the <see cref="IImmutableSet{T}"/> interface.
         /// </summary>
         [Pure]
         public ImmutableHashSet<T> WithComparer(IEqualityComparer<T> equalityComparer)
@@ -572,10 +572,10 @@ namespace System.Collections.Immutable
         #region ICollection Methods
 
         /// <summary>
-        /// Copies the elements of the <see cref="T:System.Collections.ICollection" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.
+        /// Copies the elements of the <see cref="ICollection"/> to an <see cref="Array"/>, starting at a particular <see cref="Array"/> index.
         /// </summary>
-        /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
-        /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+        /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ICollection"/>. The <see cref="Array"/> must have zero-based indexing.</param>
+        /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
         void ICollection.CopyTo(Array array, int arrayIndex)
         {
             Requires.NotNull(array, "array");
@@ -596,7 +596,7 @@ namespace System.Collections.Immutable
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+        /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
         /// </returns>
         public Enumerator GetEnumerator()
         {
@@ -619,7 +619,7 @@ namespace System.Collections.Immutable
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+        /// An <see cref="IEnumerator"/> object that can be used to iterate through the collection.
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -1026,7 +1026,7 @@ namespace System.Collections.Immutable
         /// Bulk adds entries to the set.
         /// </summary>
         /// <param name="items">The entries to add.</param>
-        /// <param name="avoidWithComparer"><c>true</c> when being called from ToHashSet to avoid StackOverflow.</param>
+        /// <param name="avoidWithComparer"><c>true</c> when being called from <see cref="WithComparer"/> to avoid <see cref="T:System.StackOverflowException"/>.</param>
         [Pure]
         private ImmutableHashSet<T> Union(IEnumerable<T> items, bool avoidWithComparer)
         {

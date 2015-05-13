@@ -9,7 +9,7 @@ using Validation;
 namespace System.Collections.Immutable
 {
     /// <content>
-    /// Contains the inner MutationInput class.
+    /// Contains the inner <see cref="ImmutableHashSet{T}.MutationInput"/> class.
     /// </content>
     public partial class ImmutableHashSet<T>
     {
@@ -35,7 +35,7 @@ namespace System.Collections.Immutable
             private readonly int _count;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;.MutationInput"/> struct.
+            /// Initializes a new instance of the <see cref="ImmutableHashSet{T}.MutationInput"/> struct.
             /// </summary>
             /// <param name="set">The set.</param>
             internal MutationInput(ImmutableHashSet<T> set)
@@ -47,7 +47,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;.MutationInput"/> struct.
+            /// Initializes a new instance of the <see cref="ImmutableHashSet{T}.MutationInput"/> struct.
             /// </summary>
             /// <param name="root">The root.</param>
             /// <param name="equalityComparer">The equality comparer.</param>
