@@ -8,7 +8,7 @@ using Validation;
 namespace System.Collections.Immutable
 {
     /// <content>
-    /// Contains the inner MutationResult class.
+    /// Contains the inner <see cref="ImmutableDictionary{TKey, TValue}.MutationResult"/> class.
     /// </content>
     public partial class ImmutableDictionary<TKey, TValue>
     {
@@ -28,7 +28,7 @@ namespace System.Collections.Immutable
             private readonly int _countAdjustment;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableDictionary&lt;TKey, TValue&gt;.MutationResult"/> struct.
+            /// Initializes a new instance of the <see cref="ImmutableDictionary{TKey, TValue}.MutationResult"/> struct.
             /// </summary>
             /// <param name="unchangedInput">The unchanged input.</param>
             internal MutationResult(MutationInput unchangedInput)
@@ -38,7 +38,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableDictionary&lt;TKey, TValue&gt;.MutationResult"/> struct.
+            /// Initializes a new instance of the <see cref="ImmutableDictionary{TKey, TValue}.MutationResult"/> struct.
             /// </summary>
             /// <param name="root">The root.</param>
             /// <param name="countAdjustment">The count adjustment.</param>

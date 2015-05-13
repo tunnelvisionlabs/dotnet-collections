@@ -23,7 +23,7 @@ namespace System.Collections.Immutable
         /// </summary>
         /// <remarks>
         /// <para>
-        /// While <see cref="ImmutableList&lt;T&gt;.AddRange"/> and other bulk change methods
+        /// While <see cref="ImmutableList{T}.AddRange"/> and other bulk change methods
         /// already provide fast bulk change operations on the collection, this class allows
         /// multiple combinations of changes to be made to a set with equal efficiency.
         /// </para>
@@ -162,7 +162,7 @@ namespace System.Collections.Immutable
             #region IList<T> Methods
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public int IndexOf(T item)
             {
@@ -170,7 +170,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public void Insert(int index, T item)
             {
@@ -178,7 +178,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public void RemoveAt(int index)
             {
@@ -186,7 +186,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public void Add(T item)
             {
@@ -194,7 +194,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public void Clear()
             {
@@ -202,7 +202,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public bool Contains(T item)
             {
@@ -210,7 +210,7 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// See <see cref="IList&lt;T&gt;"/>
+            /// See <see cref="IList{T}"/>
             /// </summary>
             public bool Remove(T item)
             {
@@ -228,7 +228,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
             /// </returns>
             public ImmutableList<T>.Enumerator GetEnumerator()
             {
@@ -239,7 +239,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
             /// </returns>
             IEnumerator<T> IEnumerable<T>.GetEnumerator()
             {
@@ -250,7 +250,7 @@ namespace System.Collections.Immutable
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            /// A <see cref="IEnumerator{T}"/> that can be used to iterate through the collection.
             /// </returns>
             IEnumerator IEnumerable.GetEnumerator()
             {
@@ -1021,9 +1021,9 @@ namespace System.Collections.Immutable
             #region IList members
 
             /// <summary>
-            /// Adds an item to the <see cref="T:System.Collections.IList" />.
+            /// Adds an item to the <see cref="IList"/>.
             /// </summary>
-            /// <param name="value">The object to add to the <see cref="T:System.Collections.IList" />.</param>
+            /// <param name="value">The object to add to the <see cref="IList"/>.</param>
             /// <returns>
             /// The position into which the new element was inserted, or -1 to indicate that the item was not inserted into the collection,
             /// </returns>
@@ -1044,11 +1044,11 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Determines whether the <see cref="T:System.Collections.IList" /> contains a specific value.
+            /// Determines whether the <see cref="IList"/> contains a specific value.
             /// </summary>
-            /// <param name="value">The object to locate in the <see cref="T:System.Collections.IList" />.</param>
+            /// <param name="value">The object to locate in the <see cref="IList"/>.</param>
             /// <returns>
-            /// true if the <see cref="T:System.Object" /> is found in the <see cref="T:System.Collections.IList" />; otherwise, false.
+            /// true if the <see cref="object"/> is found in the <see cref="IList"/>; otherwise, false.
             /// </returns>
             /// <exception cref="System.NotImplementedException"></exception>
             bool IList.Contains(object value)
@@ -1057,11 +1057,11 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Determines the index of a specific item in the <see cref="T:System.Collections.IList" />.
+            /// Determines the index of a specific item in the <see cref="IList"/>.
             /// </summary>
-            /// <param name="value">The object to locate in the <see cref="T:System.Collections.IList" />.</param>
+            /// <param name="value">The object to locate in the <see cref="IList"/>.</param>
             /// <returns>
-            /// The index of <paramref name="value" /> if found in the list; otherwise, -1.
+            /// The index of <paramref name="value"/> if found in the list; otherwise, -1.
             /// </returns>
             /// <exception cref="System.NotImplementedException"></exception>
             int IList.IndexOf(object value)
@@ -1070,10 +1070,10 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Inserts an item to the <see cref="T:System.Collections.IList" /> at the specified index.
+            /// Inserts an item to the <see cref="IList"/> at the specified index.
             /// </summary>
-            /// <param name="index">The zero-based index at which <paramref name="value" /> should be inserted.</param>
-            /// <param name="value">The object to insert into the <see cref="T:System.Collections.IList" />.</param>
+            /// <param name="index">The zero-based index at which <paramref name="value"/> should be inserted.</param>
+            /// <param name="value">The object to insert into the <see cref="IList"/>.</param>
             /// <exception cref="System.NotImplementedException"></exception>
             void IList.Insert(int index, object value)
             {
@@ -1081,9 +1081,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Gets a value indicating whether the <see cref="T:System.Collections.IList" /> has a fixed size.
+            /// Gets a value indicating whether the <see cref="IList"/> has a fixed size.
             /// </summary>
-            /// <returns>true if the <see cref="T:System.Collections.IList" /> has a fixed size; otherwise, false.</returns>
+            /// <returns>true if the <see cref="IList"/> has a fixed size; otherwise, false.</returns>
             /// <exception cref="System.NotImplementedException"></exception>
             bool IList.IsFixedSize
             {
@@ -1091,9 +1091,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.
+            /// Gets a value indicating whether the <see cref="ICollection{T}"/> is read-only.
             /// </summary>
-            /// <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only; otherwise, false.
+            /// <returns>true if the <see cref="ICollection{T}"/> is read-only; otherwise, false.
             ///   </returns>
             /// <exception cref="System.NotImplementedException"></exception>
             bool IList.IsReadOnly
@@ -1102,9 +1102,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList" />.
+            /// Removes the first occurrence of a specific object from the <see cref="IList"/>.
             /// </summary>
-            /// <param name="value">The object to remove from the <see cref="T:System.Collections.IList" />.</param>
+            /// <param name="value">The object to remove from the <see cref="IList"/>.</param>
             /// <exception cref="System.NotImplementedException"></exception>
             void IList.Remove(object value)
             {
@@ -1112,10 +1112,10 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Gets or sets the <see cref="System.Object" /> at the specified index.
+            /// Gets or sets the <see cref="System.Object"/> at the specified index.
             /// </summary>
             /// <value>
-            /// The <see cref="System.Object" />.
+            /// The <see cref="System.Object"/>.
             /// </value>
             /// <param name="index">The index.</param>
             /// <returns></returns>
@@ -1131,10 +1131,10 @@ namespace System.Collections.Immutable
             #region ICollection members
 
             /// <summary>
-            /// Copies the elements of the <see cref="T:System.Collections.ICollection" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.
+            /// Copies the elements of the <see cref="ICollection"/> to an <see cref="Array"/>, starting at a particular <see cref="Array"/> index.
             /// </summary>
-            /// <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing.</param>
-            /// <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+            /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from <see cref="ICollection"/>. The <see cref="Array"/> must have zero-based indexing.</param>
+            /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
             /// <exception cref="System.NotImplementedException"></exception>
             void ICollection.CopyTo(Array array, int arrayIndex)
             {
@@ -1142,9 +1142,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection" /> is synchronized (thread safe).
+            /// Gets a value indicating whether access to the <see cref="ICollection"/> is synchronized (thread safe).
             /// </summary>
-            /// <returns>true if access to the <see cref="T:System.Collections.ICollection" /> is synchronized (thread safe); otherwise, false.</returns>
+            /// <returns>true if access to the <see cref="ICollection"/> is synchronized (thread safe); otherwise, false.</returns>
             /// <exception cref="System.NotImplementedException"></exception>
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             bool ICollection.IsSynchronized
@@ -1153,9 +1153,9 @@ namespace System.Collections.Immutable
             }
 
             /// <summary>
-            /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection" />.
+            /// Gets an object that can be used to synchronize access to the <see cref="ICollection"/>.
             /// </summary>
-            /// <returns>An object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection" />.</returns>
+            /// <returns>An object that can be used to synchronize access to the <see cref="ICollection"/>.</returns>
             /// <exception cref="System.NotImplementedException"></exception>
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             object ICollection.SyncRoot
@@ -1177,7 +1177,6 @@ namespace System.Collections.Immutable
     /// <summary>
     /// A simple view of the immutable list that the debugger can show to the developer.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     internal class ImmutableListBuilderDebuggerProxy<T>
     {
         /// <summary>
@@ -1191,7 +1190,7 @@ namespace System.Collections.Immutable
         private T[] _cachedContents;
 
         /// <summary>   
-        /// Initializes a new instance of the <see cref="ImmutableListBuilderDebuggerProxy&lt;T&gt;"/> class.
+        /// Initializes a new instance of the <see cref="ImmutableListBuilderDebuggerProxy{T}"/> class.
         /// </summary>
         /// <param name="builder">The list to display in the debugger</param>
         public ImmutableListBuilderDebuggerProxy(ImmutableList<T>.Builder builder)

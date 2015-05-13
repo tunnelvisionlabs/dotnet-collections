@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace System.Collections.Immutable
 {
     /// <content>
-    /// Contains the inner Enumerator class.
+    /// Contains the inner <see cref="ImmutableHashSet{T}.Enumerator"/> class.
     /// </content>
     public partial class ImmutableHashSet<T>
     {
@@ -38,7 +38,7 @@ namespace System.Collections.Immutable
             private int _enumeratingBuilderVersion;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ImmutableHashSet&lt;T&gt;.Enumerator" /> struct.
+            /// Initializes a new instance of the <see cref="ImmutableHashSet{T}.Enumerator"/> struct.
             /// </summary>
             /// <param name="root">The root.</param>
             /// <param name="builder">The builder, if applicable.</param>
@@ -76,7 +76,7 @@ namespace System.Collections.Immutable
             /// <returns>
             /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
             /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created. </exception>
+            /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
             public bool MoveNext()
             {
                 this.ThrowIfChanged();
@@ -98,7 +98,7 @@ namespace System.Collections.Immutable
             /// <summary>
             /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
-            /// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created. </exception>
+            /// <exception cref="InvalidOperationException">The collection was modified after the enumerator was created. </exception>
             public void Reset()
             {
                 _enumeratingBuilderVersion = _builder != null ? _builder.Version : -1;
