@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="BadHasher.cs" />
+    <Compile Include="DebuggerAttributes.cs" />
     <Compile Include="EverythingEqual.cs" />
     <Compile Include="ImmutableArrayBuilderTest.cs" />
     <Compile Include="ImmutableArrayExtensionsTest.cs" />
