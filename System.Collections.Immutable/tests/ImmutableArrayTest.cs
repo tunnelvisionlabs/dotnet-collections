@@ -260,7 +260,11 @@ namespace System.Collections.Immutable.Test
             ImmutableArray<string> derivedImmutable = ImmutableArray.Create("a", "b", "c");
             ImmutableArray<object> baseImmutable = derivedImmutable.As<object>();
             Assert.False(baseImmutable.IsDefault);
+#if NET40PLUS
             Assert.Equal(derivedImmutable, baseImmutable);
+#else
+            Assert.Equal(derivedImmutable.Cast<object>(), baseImmutable);
+#endif
 
             // Make sure we can reverse that, as a means to verify the underlying array is the same instance.
             ImmutableArray<string> derivedImmutable2 = baseImmutable.As<string>();
@@ -293,8 +297,13 @@ namespace System.Collections.Immutable.Test
         public void CovarianceImplicit()
         {
             ImmutableArray<string> derivedImmutable = ImmutableArray.Create("a", "b", "c");
+#if NET40PLUS
             ImmutableArray<object> baseImmutable = ImmutableArray.CreateRange<object>(derivedImmutable);
             Assert.Equal(derivedImmutable, baseImmutable);
+#else
+            ImmutableArray<object> baseImmutable = ImmutableArray.CreateRange<object>(derivedImmutable.CastArray<object>());
+            Assert.Equal(derivedImmutable.Cast<object>(), baseImmutable);
+#endif
 
             // Make sure we can reverse that, as a means to verify the underlying array is the same instance.
             ImmutableArray<string> derivedImmutable2 = baseImmutable.As<string>();
@@ -306,7 +315,11 @@ namespace System.Collections.Immutable.Test
         {
             ImmutableArray<string> derivedImmutable = ImmutableArray.Create("a", "b", "c");
             ImmutableArray<object> baseImmutable = ImmutableArray<object>.CastUp(derivedImmutable);
+#if NET40PLUS
             Assert.Equal(derivedImmutable, baseImmutable);
+#else
+            Assert.Equal(derivedImmutable.Cast<object>(), baseImmutable);
+#endif
 
             // Make sure we can reverse that, as a means to verify the underlying array is the same instance.
             Assert.Equal(derivedImmutable, baseImmutable.As<string>());
@@ -1264,7 +1277,7 @@ namespace System.Collections.Immutable.Test
                     ImmutableInterlocked.InterlockedExchange(ref array, array.Add(1));
                 }
             };
-            Task.WaitAll(Task.Run(mutator), Task.Run(mutator));
+            Task.WaitAll(Task.Factory.StartNew(mutator), Task.Factory.StartNew(mutator));
         }
 
         [Fact]

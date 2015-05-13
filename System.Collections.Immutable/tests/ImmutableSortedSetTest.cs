@@ -41,7 +41,7 @@ namespace System.Collections.Immutable.Test
             var actual = ImmutableSortedSet<int>.Empty;
 
             int seed = (int)DateTime.Now.Ticks;
-            Debug.WriteLine("Using random seed {0}", seed);
+            Debug.WriteLine(string.Format("Using random seed {0}", seed));
             var random = new Random(seed);
 
             for (int iOp = 0; iOp < operationCount; iOp++)
@@ -50,14 +50,14 @@ namespace System.Collections.Immutable.Test
                 {
                     case Operation.Add:
                         int value = random.Next();
-                        Debug.WriteLine("Adding \"{0}\" to the set.", value);
+                        Debug.WriteLine(string.Format("Adding \"{0}\" to the set.", value));
                         expected.Add(value);
                         actual = actual.Add(value);
                         break;
                     case Operation.Union:
                         int inputLength = random.Next(100);
                         int[] values = Enumerable.Range(0, inputLength).Select(i => random.Next()).ToArray();
-                        Debug.WriteLine("Adding {0} elements to the set.", inputLength);
+                        Debug.WriteLine(string.Format("Adding {0} elements to the set.", inputLength));
                         expected.UnionWith(values);
                         actual = actual.Union(values);
                         break;
@@ -66,7 +66,7 @@ namespace System.Collections.Immutable.Test
                         {
                             int position = random.Next(expected.Count);
                             int element = expected.Skip(position).First();
-                            Debug.WriteLine("Removing element \"{0}\" from the set.", element);
+                            Debug.WriteLine(string.Format("Removing element \"{0}\" from the set.", element));
                             Assert.True(expected.Remove(element));
                             actual = actual.Remove(element);
                         }
@@ -74,7 +74,7 @@ namespace System.Collections.Immutable.Test
                         break;
                     case Operation.Except:
                         var elements = expected.Where(el => random.Next(2) == 0).ToArray();
-                        Debug.WriteLine("Removing {0} elements from the set.", elements.Length);
+                        Debug.WriteLine(string.Format("Removing {0} elements from the set.", elements.Length));
                         expected.ExceptWith(elements);
                         actual = actual.Except(elements);
                         break;

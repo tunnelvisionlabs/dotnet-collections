@@ -54,6 +54,7 @@
     <Compile Include="BadHasher.cs" />
     <Compile Include="DebuggerAttributes.cs" />
     <Compile Include="EverythingEqual.cs" />
+    <Compile Include="Func`6.cs" />
     <Compile Include="ImmutableArrayBuilderTest.cs" />
     <Compile Include="ImmutableArrayExtensionsTest.cs" />
     <Compile Include="ImmutableArrayTest.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="RequiresTests.cs" />
     <Compile Include="SimpleElementImmutablesTestBase.cs" />
     <Compile Include="TestExtensionsMethods.cs" />
+    <Compile Include="Tuple`3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\build\keys\UnitTestingKey.snk">

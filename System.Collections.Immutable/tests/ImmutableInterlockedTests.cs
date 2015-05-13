@@ -69,7 +69,7 @@ namespace System.Collections.Immutable.Test
                 var barrier = new Barrier(tasks.Length);
                 for (int i = 0; i < tasks.Length; i++)
                 {
-                    tasks[i] = Task.Run(delegate
+                    tasks[i] = Task.Factory.StartNew(delegate
                     {
                         // Maximize concurrency by blocking this thread until all the other threads are ready to go as well.
                         barrier.SignalAndWait();
@@ -99,7 +99,7 @@ namespace System.Collections.Immutable.Test
                 var task2TransformEntered = new AutoResetEvent(false);
                 var task1TransformExited = new AutoResetEvent(false);
 
-                var task1 = Task.Run(delegate
+                var task1 = Task.Factory.StartNew(delegate
                 {
                     int transform1ExecutionCounter = 0;
                     func(
@@ -114,7 +114,7 @@ namespace System.Collections.Immutable.Test
                     Assert.Equal(1, transform1ExecutionCounter);
                 });
 
-                var task2 = Task.Run(delegate
+                var task2 = Task.Factory.StartNew(delegate
                 {
                     int transform2ExecutionCounter = 0;
                     func(

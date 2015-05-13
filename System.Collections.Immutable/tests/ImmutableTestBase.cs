@@ -117,7 +117,7 @@ namespace System.Collections.Immutable.Test
 
             int seed = unchecked((int)DateTime.Now.Ticks);
 
-            Debug.WriteLine("Random seed {0}", seed);
+            Debug.WriteLine(string.Format("Random seed {0}", seed));
 
             var random = new Random(seed);
             var inputs = new double[length];
