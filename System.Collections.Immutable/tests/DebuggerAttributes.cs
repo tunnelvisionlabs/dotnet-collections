@@ -44,7 +44,12 @@ namespace System.Diagnostics
             // Create an instance of the proxy type, and make sure we can access all of the instance properties 
             // on the type without exception
             object proxyInstance = Activator.CreateInstance(proxyType, obj);
-            foreach (var pi in proxyInstance.GetType().GetTypeInfo().DeclaredProperties)
+#if NET45PLUS
+            var properties = proxyInstance.GetType().GetTypeInfo().DeclaredProperties;
+#else
+            var properties = proxyInstance.GetType().GetTypeInfo().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+#endif
+            foreach (var pi in properties)
             {
                 pi.GetValue(proxyInstance, null);
             }
@@ -115,7 +120,11 @@ namespace System.Diagnostics
         {
             for (Type t = obj.GetType(); t != null; t = t.GetTypeInfo().BaseType)
             {
+#if NET45PLUS
                 FieldInfo fi = t.GetTypeInfo().GetDeclaredField(fieldName);
+#else
+                FieldInfo fi = t.GetTypeInfo().GetField(fieldName, BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+#endif
                 if (fi != null)
                 {
                     return fi;
@@ -128,7 +137,11 @@ namespace System.Diagnostics
         {
             for (Type t = obj.GetType(); t != null; t = t.GetTypeInfo().BaseType)
             {
+#if NET45PLUS
                 PropertyInfo pi = t.GetTypeInfo().GetDeclaredProperty(propertyName);
+#else
+                PropertyInfo pi = t.GetTypeInfo().GetProperty(propertyName, BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+#endif
                 if (pi != null)
                 {
                     return pi;
