@@ -9,7 +9,7 @@ This project is a complete port of the [System.Collections.Immutable][2] assembl
 
 ## Releases
 
-* [Binaries (NuGet)](https://www.nuget.org/packages/System.Collections.Immutable)
+* [Binaries (NuGet)](https://www.nuget.org/packages/Rackspace.Collections.Immutable)
 * [Release Notes](https://github.com/rackerlabs/dotnet-collections/releases)
 * [License](https://github.com/sharwell/dotnet-collections/blob/master/LICENSE)
 
