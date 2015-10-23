@@ -1281,7 +1281,7 @@ namespace System.Collections.Immutable
         /// <exception cref="System.NotImplementedException"></exception>
         bool IList.Contains(object value)
         {
-            return this.Contains((T)value);
+            return (value is T || (value == null && default(T) == null)) && this.Contains((T)value);
         }
 
         /// <summary>
@@ -1294,7 +1294,10 @@ namespace System.Collections.Immutable
         /// <exception cref="System.NotImplementedException"></exception>
         int IList.IndexOf(object value)
         {
-            return this.IndexOf((T)value);
+            if (value is T || (value == null && default(T) == null))
+                return this.IndexOf((T)value);
+            else
+                return -1;
         }
 
         /// <summary>
