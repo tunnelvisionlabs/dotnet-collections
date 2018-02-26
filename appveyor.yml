@@ -8,6 +8,7 @@ before_build:
 build:
   verbosity: minimal
 test_script:
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net30\System.Collections.Immutable.Tests.dll" -appveyor'
 - '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net35-client\System.Collections.Immutable.Tests.dll" -appveyor'
 - '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net40-client\System.Collections.Immutable.Tests.dll" -appveyor'
 - '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net40\System.Collections.Immutable.Tests.dll" -appveyor'

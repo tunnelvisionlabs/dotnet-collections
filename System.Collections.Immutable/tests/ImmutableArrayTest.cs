@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
+
+#if NET35PLUS
+using System.Threading.Tasks;
+#endif
 
 namespace System.Collections.Immutable.Test
 {
@@ -1258,6 +1261,7 @@ namespace System.Collections.Immutable.Test
             Assert.Equal(1, s_twoElementRefTypeWithNull.OfType<string>().Count());
         }
 
+#if NET35PLUS
         [Fact]
         public void Add_ThreadSafety()
         {
@@ -1279,6 +1283,7 @@ namespace System.Collections.Immutable.Test
             };
             Task.WaitAll(Task.Factory.StartNew(mutator), Task.Factory.StartNew(mutator));
         }
+#endif
 
         [Fact]
         public void DebuggerAttributesValid()
