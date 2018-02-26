@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27421.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40FD9067-4B1C-49B3-BD4C-51ECEF2811C4}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,21 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.net35-client", "System.Collections.Immutable\src\System.Collections.Immutable.net35-client.csproj", "{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Collections.Immutable", "System.Collections.Immutable\src\System.Collections.Immutable.csproj", "{AFD73D93-F104-443A-8BD9-033C7BDFD6C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.net35-client", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.net35-client.csproj", "{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.net40-client", "System.Collections.Immutable\src\System.Collections.Immutable.net40-client.csproj", "{D550DC59-8708-47FC-87C4-013794221FBC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.net40-client", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.net40-client.csproj", "{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.portable-net40", "System.Collections.Immutable\src\System.Collections.Immutable.portable-net40.csproj", "{418E9FC8-A042-4EE5-B20C-72F86A51AEED}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.portable-net40", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.portable-net40.csproj", "{1F05CF36-7E79-4FCB-B753-67249EA0FAF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.portable-net45", "System.Collections.Immutable\src\System.Collections.Immutable.portable-net45.csproj", "{1DD0FF15-6234-4BD6-850A-317F05479554}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Collections.Immutable.Tests.portable-net45", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.portable-net45.csproj", "{95DFC527-4DC1-495E-97D7-E94EE1F7140D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Collections.Immutable.Tests", "System.Collections.Immutable\tests\System.Collections.Immutable.Tests.csproj", "{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FEAE5BC4-7447-4959-B35A-BA152534A466}"
 	ProjectSection(SolutionItems) = preProject
@@ -50,32 +38,11 @@ Global
 		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{543F74DC-9715-40D5-84B9-D79D3FD8F7EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D550DC59-8708-47FC-87C4-013794221FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D550DC59-8708-47FC-87C4-013794221FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D550DC59-8708-47FC-87C4-013794221FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D550DC59-8708-47FC-87C4-013794221FBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9CB0057-6B77-4AE0-95D5-98C84F3FE5A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{418E9FC8-A042-4EE5-B20C-72F86A51AEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{418E9FC8-A042-4EE5-B20C-72F86A51AEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{418E9FC8-A042-4EE5-B20C-72F86A51AEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{418E9FC8-A042-4EE5-B20C-72F86A51AEED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F05CF36-7E79-4FCB-B753-67249EA0FAF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F05CF36-7E79-4FCB-B753-67249EA0FAF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F05CF36-7E79-4FCB-B753-67249EA0FAF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F05CF36-7E79-4FCB-B753-67249EA0FAF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DD0FF15-6234-4BD6-850A-317F05479554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DD0FF15-6234-4BD6-850A-317F05479554}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DD0FF15-6234-4BD6-850A-317F05479554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DD0FF15-6234-4BD6-850A-317F05479554}.Release|Any CPU.Build.0 = Release|Any CPU
-		{95DFC527-4DC1-495E-97D7-E94EE1F7140D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95DFC527-4DC1-495E-97D7-E94EE1F7140D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95DFC527-4DC1-495E-97D7-E94EE1F7140D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95DFC527-4DC1-495E-97D7-E94EE1F7140D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD461A47-4376-4120-BF92-B2BE7D3DFD78}
 	EndGlobalSection
 EndGlobal
