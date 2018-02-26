@@ -6,8 +6,8 @@
     <AssemblyName>Rackspace.Collections.Immutable</AssemblyName>
 
     <Description>Compatibility library for using the Microsoft Immutable Collections library in projects targeting .NET 3.5 and newer.</Description>
-    <Company>Microsoft Corporation</Company>
-    <Copyright>© Microsoft Corporation.  All rights reserved.</Copyright>
+    <Company>Tunnel Vision Laboratories, LLC</Company>
+    <Copyright>© Tunnel Vision Laboratories, LLC.  All rights reserved.</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
 
     <Version>1.1.0.0</Version>
@@ -20,7 +20,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
 
-    <PackageId>Rackspace.Collections.Immutable</PackageId>
+    <PackageId>TunnelVisionLabs.Collections.Immutable</PackageId>
     <PackageVersion>$(InformationalVersion)</PackageVersion>
     <Authors>Sam Harwell</Authors>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
