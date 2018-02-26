@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35-client;net40-client;portable-net4+sl5+win+wpa81+wp8;portable-net45+win8+wp8+wpa81</TargetFrameworks>
+    <TargetFrameworks>net30;net35-client;net40-client;portable-net4+sl5+win+wpa81+wp8;portable-net45+win8+wp8+wpa81</TargetFrameworks>
     <AssemblyName>Rackspace.Collections.Immutable</AssemblyName>
 
     <Description>Compatibility library for using the Microsoft Immutable Collections library in projects targeting .NET 3.5 and newer.</Description>
@@ -31,6 +31,11 @@
   </PropertyGroup>
 
   <Choose>
+    <When Condition="'$(TargetFramework)' == 'net30'">
+      <ItemGroup>
+        <PackageReference Include="LinqBridge" Version="1.3.0" />
+      </ItemGroup>
+    </When>
     <When Condition="'$(TargetFramework)' == 'net35-client'">
       <PropertyGroup>
         <DefineConstants>$(DefineConstants);NET35;NET35PLUS</DefineConstants>
