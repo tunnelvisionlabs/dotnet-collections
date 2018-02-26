@@ -1,17 +1,21 @@
-﻿# Rackspace.Collections.Immutable
+﻿# TunnelVisionLabs.Collections.Immutable
 
 [![Build status](https://ci.appveyor.com/api/projects/status/o6sy4k8aaif2tel8/branch/master?svg=true)][1]
 
-This project is a complete port of the [System.Collections.Immutable][2] assembly to support .NET 3.5 and newer.
+This project is a complete port of the [System.Collections.Immutable][2] assembly to support .NET 2.0 and newer.
 
 [1]: https://ci.appveyor.com/project/sharwell/dotnet-collections/branch/master
 [2]: https://www.nuget.org/packages/System.Collections.Immutable
 
 ## Releases
 
-* [Binaries (NuGet)](https://www.nuget.org/packages/Rackspace.Collections.Immutable)
-* [Release Notes](https://github.com/rackerlabs/dotnet-collections/releases)
-* [License](https://github.com/sharwell/dotnet-collections/blob/master/LICENSE)
+* [Binaries (NuGet)](https://www.nuget.org/packages/TunnelVisionLabs.Collections.Immutable)
+* [Release Notes](https://github.com/tunnelvisionlabs/dotnet-collections/releases)
+* [License](https://github.com/tunnelvisionlabs/dotnet-collections/blob/master/LICENSE)
+
+Release version 1.1.36 and earlier can be found on NuGet in the [Rackspace.Collections.Immutable][3] library.
+
+[3]: https://www.nuget.org/packages/Rackspace.Collections.Immutable
 
 ## Supported APIs
 
