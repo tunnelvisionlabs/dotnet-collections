@@ -3,8 +3,11 @@
 
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
+
+#if NET35PLUS
+using System.Threading.Tasks;
+#endif
 
 namespace System.Collections.Immutable.Test
 {
@@ -57,6 +60,7 @@ namespace System.Collections.Immutable.Test
             });
         }
 
+#if NET35PLUS
         [Fact]
         public void Update_HighConcurrency()
         {
@@ -89,7 +93,9 @@ namespace System.Collections.Immutable.Test
                 }
             });
         }
+#endif
 
+#if NET35PLUS
         [Fact]
         public void Update_CarefullyScheduled()
         {
@@ -148,6 +154,7 @@ namespace System.Collections.Immutable.Test
                 Assert.True(set.Contains(2));
             });
         }
+#endif
 
         [Fact]
         public void InterlockedExchangeArrayDefault()
