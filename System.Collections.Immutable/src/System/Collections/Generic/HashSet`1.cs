@@ -11,9 +11,11 @@ using System.Runtime.Serialization;
 
 namespace System.Collections.Generic
 {
+    using SR = ExceptionResource;
+
     /// <summary>
     /// Implementation notes:
-    /// This uses an array-based implementation similar to Dictionary<T>, using a buckets array
+    /// This uses an array-based implementation similar to Dictionary&lt;T&gt;, using a buckets array
     /// to map hash values to the Slots array. Items in the Slots array that hash to the same value
     /// are chained together through the "next" indices. 
     /// 
@@ -51,7 +53,6 @@ namespace System.Collections.Generic
     [DebuggerDisplay("Count = {Count}")]
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "By design")]
     [Serializable]
-    [System.Runtime.CompilerServices.TypeForwardedFrom("System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")]
     internal class HashSet<T> : ICollection<T>, ISet<T>, IReadOnlyCollection<T>, ISerializable, IDeserializationCallback
     {
         // store lower 31 bits of hash code
@@ -220,7 +221,7 @@ namespace System.Collections.Generic
         #region ICollection<T> methods
 
         /// <summary>
-        /// Add item to this hashset. This is the explicit implementation of the ICollection<T>
+        /// Add item to this hashset. This is the explicit implementation of the ICollection&lt;T&gt;
         /// interface. The other Add method returns bool indicating whether item was added.
         /// </summary>
         /// <param name="item">item to add</param>
@@ -310,10 +311,7 @@ namespace System.Collections.Generic
                             _slots[last].next = _slots[i].next;
                         }
                         _slots[i].hashCode = -1;
-                        if (RuntimeHelpers.IsReferenceOrContainsReferences<T>())
-                        {
-                            _slots[i].value = default(T);
-                        }
+                        _slots[i].value = default(T);
                         _slots[i].next = _freeList;
 
                         _count--;
@@ -1142,7 +1140,6 @@ namespace System.Collections.Generic
         /// defragmentation, allowing faster execution; note that this is reasonable since 
         /// AddIfNotPresent attempts to insert new elements in re-opened spots.
         /// </summary>
-        /// <param name="sizeSuggestion"></param>
         private void IncreaseCapacity()
         {
             Debug.Assert(_buckets != null, "IncreaseCapacity called on a set with no elements");

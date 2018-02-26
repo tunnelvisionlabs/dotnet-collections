@@ -23,6 +23,8 @@ using System.Threading;
 
 namespace System.Collections
 {
+    using SR = ExceptionResource;
+
     internal static class HashHelpers
     {
         // Table of prime numbers to use as hash table sizes. 
