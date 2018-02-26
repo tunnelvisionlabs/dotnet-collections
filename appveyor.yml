@@ -1,4 +1,5 @@
 version: 1.0.{build}
+image: Visual Studio 2017
 configuration: Debug
 init:
 - git config --global core.autocrlf true
@@ -7,7 +8,9 @@ before_build:
 build:
   verbosity: minimal
 test_script:
-- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\net35-client\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
-- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\net40-client\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
-- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\portable-net40\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
-- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\portable-net45\%CONFIGURATION%\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net35-client\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net40-client\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\net40\System.Collections.Immutable.Tests.dll" -appveyor'
+- '%xunit20%\xunit.console.x86 "C:\projects\dotnet-collections\System.Collections.Immutable\tests\bin\%CONFIGURATION%\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.Tests.dll" -appveyor'
+artifacts:
+- path: 'System.Collections.Immutable\**\*.nupkg'

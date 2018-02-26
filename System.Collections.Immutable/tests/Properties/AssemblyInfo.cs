@@ -7,10 +7,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("System.Collections.Immutable.Test")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("System.Collections.Immutable.Test")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net35-client;net40-client;portable-net4+sl5+win+wpa81+wp8;portable-net45+win8+wp8+wpa81</TargetFrameworks>
+    <AssemblyName>Rackspace.Collections.Immutable</AssemblyName>
+
+    <Description>Compatibility library for using the Microsoft Immutable Collections library in projects targeting .NET 3.5 and newer.</Description>
+    <Company>Microsoft Corporation</Company>
+    <Copyright>© Microsoft Corporation.  All rights reserved.</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+
+    <Version>1.1.0.0</Version>
+    <FileVersion>1.1.37.0</FileVersion>
+    <InformationalVersion>1.1.37-dev</InformationalVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+
+    <PackageId>Rackspace.Collections.Immutable</PackageId>
+    <PackageVersion>$(InformationalVersion)</PackageVersion>
+    <Authors>Sam Harwell</Authors>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://raw.github.com/tunnelvisionlabs/dotnet-collections/v$(PackageVersion)/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/tunnelvisionlabs/dotnet-collections</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/tunnelvisionlabs/dotnet-collections/releases/v$(PackageVersion)</PackageReleaseNotes>
+    <PackageTags>immutable collections</PackageTags>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$(TargetFramework)' == 'net35-client'">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);NET35;NET35PLUS</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(TargetFramework)' == 'net40-client'">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);NET40;NET40PLUS;NET35PLUS</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(TargetFramework)' == 'portable-net4+sl5+win+wpa81+wp8'">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);PORTABLE;NET40;NET40PLUS;NET35PLUS</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(TargetFramework)' == 'portable-net45+win8+wp8+wpa81'">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);PORTABLE;NET45;NET45PLUS;NET40PLUS;NET35PLUS</DefineConstants>
+      </PropertyGroup>
+      <ItemGroup>
+        <PackageReference Include="System.Collections.Immutable" Version="1.1.36" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>System.Collections.Immutable.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' == 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(KeyConfiguration)' != 'Final'">..\..\build\keys\Rackspace.Collections.Immutable.dev.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.dev.snk">
+      <Link>Rackspace.Collections.Immutable.dev.snk</Link>
+    </None>
+    <None Include="..\..\build\keys\Rackspace.Collections.Immutable.snk">
+      <Link>Rackspace.Collections.Immutable.snk</Link>
+    </None>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+</Project>

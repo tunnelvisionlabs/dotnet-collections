@@ -3,7 +3,6 @@
 
 using System;
 using System.Reflection;
-using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -11,19 +10,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyCopyright("\x00a9 Microsoft Corporation.  All rights reserved.")]
-[assembly: AssemblyCompany("Microsoft Corporation")]
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.37.0")]
-[assembly: AssemblyInformationalVersion("1.1.37-dev")]
-
-[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyProduct("Rackspace.Collections.Immutable")]
-[assembly: AssemblyTitle("Rackspace.Collections.Immutable")]
 [assembly: AssemblyTrademark("")]
-[assembly: NeutralResourcesLanguage("en-US")]
 
 [assembly: CLSCompliant(true)]
 
