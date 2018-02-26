@@ -211,7 +211,11 @@ namespace System.Collections.Immutable.Test
         {
             // Basis for some assertions that follow
             Assert.Throws<IndexOutOfRangeException>(() => Enumerable.ElementAt(s_empty, 0));
+#if NET35PLUS // .NET Framework
             Assert.Throws<IndexOutOfRangeException>(() => Enumerable.ElementAt(s_manyElements, -1));
+#else // LinqBridge
+            Assert.Throws<ArgumentOutOfRangeException>(() => Enumerable.ElementAt(s_manyElements, -1));
+#endif
 
             Assert.Throws<NullReferenceException>(() => ImmutableArrayExtensions.ElementAt(s_emptyDefault, 0));
             Assert.Throws<IndexOutOfRangeException>(() => ImmutableArrayExtensions.ElementAt(s_empty, 0));
